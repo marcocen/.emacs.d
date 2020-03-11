@@ -154,59 +154,6 @@
 ;;   :after
 ;;   (org))
 
-;; exwm config
-
-;;(setq run-exwm (not (string-suffix-p "gnome" (getenv "XDG_CURRENT_DESKTOP") t)))
-;;(if run-exwm
-;;  (use-package exwm
-;;    :config
-;;    (require 'exwm-config)
-;;    (exwm-config-default)))
-;;(if run-exwm
-;;     (progn
-;;	(require 'exwm-randr)
-;;	(setq exwm-randr-workspace-output-plist '(0 "VGA-1" 1 "HDMI-2"))
-;;	(add-hook 'exwm-randr-screen-change-hook
-;;		  (lambda ()
-;;		    (start-process-shell-command
-;;		     "xrandr" nil "xrandr --output VGA-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --mode 1440x900 --pos 1920x0 --rotate left")))
-;;	(exwm-randr-enable)
-;;	(setq exwm-workspace-show-all-buffers 1)
-;;	(setq exwm-layout-show-all-buffers t)))
-;;if run-exwm
-  ;;  (setq exwm-input-simulation-keys
-;;	    '(([?\C-b] . [left])
-;;     ([?\C-f] . [right])
-;;	      ([?\C-p] . [up])
-;;	      ([?\C-n] . [down])
-;;	      ([?\C-a] . [home])
-;;	      ([?\C-e] . [end])
-;;	      ([?\M-v] . [prior])
-;;	      ([?\C-v] . [next])
-;;	      ([?\C-d] . [delete])
-;;	      ([?\C-k] . [S-end delete])
-;;	      ([?\C-s] . [?\C-f])
-;;	      ([?\M-w] . [?\C-c])
-;;	      ([?\C-y] . [?\C-v]))))
-;;if run-exwm
-;;     (progn
-;;	(shell-command "setxkbmap -layout us -variant altgr-intl -option compose:menu,ctrl:nocaps")
-;;	(shell-command "xscreensaver &")))
-;; (if run-exwm
-;;    (progn
-;;	(global-set-key (kbd "C-c r SPC")
-;;			'(lambda (command)
-;;			   (interactive (list (read-shell-command "$ ")))
-;;			   (start-process-shell-command command nil command)))
-;;	(global-set-key (kbd "C-c r f")
-;;			'(lambda ()
-;;			   (interactive)
-;;			   (start-process-shell-command "firefox" nil "firefox")))
-;;	(global-set-key (kbd "C-c r l")
-;;			'(lambda ()
-;;			   (interactive)
-;;			   (shell-command "xscreensaver-command -activate")))))
-
 ;; Use ivy
 (use-package ivy
   :init
@@ -218,5 +165,7 @@
 (use-package counsel
   :after
   (ivy))
-(ivy-mode 1)
-(server-start)
+
+(use-package elpy
+  :init
+  (elpy-enable))
