@@ -1,8 +1,9 @@
-(setq url-proxy-services
+(if (string-suffix-p ".fing.edu.uy" (system-name))
+  (setq url-proxy-services
       '(("http"     . "proxy.fing.edu.uy:3128")
 	("https"    . "proxy.fing.edu.uy:3128")
 	("ftp"      . "proxy.fing.edu.uy:3128")
-	("no_proxy" . "^.*fing.edu.uy")))
+	("no_proxy" . "^.*fing.edu.uy"))))
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("gnu" . "https://elpa.gnu.org/packages/")))
@@ -102,11 +103,10 @@
 
 (use-package org
   :custom
-  (setq org-capture-templates
-	'(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
-	   "* TODO %?\n")
-	  ("j" "Journal" entry (file+datetree "~/org/journal.org")
-	   "* %?\nEntered on %U\n  %i"))))
+  (org-capture-templates '(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
+			    "* TODO %?\n")
+			   ("j" "Journal" entry (file+datetree "~/org/journal.org")
+			    "* %?\nEntered on %U\n  %i"))))
 
 ;; (defun yequake-org-capture (&optional goto keys)
 ;;   "Call `org-capture' in a Yequake frame.
