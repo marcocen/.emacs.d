@@ -1,85 +1,5 @@
-
-;; Set separate custom file
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-
-;; Set theme
-(load-theme 'tango-dark)
-
-;; Load Sensible Defaults
-(load-file "local/sensible-defaults.el")
-(sensible-defaults/use-all-settings)
-(sensible-defaults/use-all-keybindings)
-(sensible-defaults/backup-to-temp-directory)
-
-;; Personal Info
-(setq user-full-name "Marco Centurión Virdó"
-      user-mail-address "mcenturion@fing.edu.uy"
-      calendar-location-name "Montevideo, UY")
-
-;; Various interface tweaks
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
-(display-time-mode 1)
-(setq display-time-default-load-average nil)
-(column-number-mode t)
-(show-paren-mode 1)
-(electric-pair-mode 1)
-
-;; Use graphic clipboard to copy/paste
-(use-package xclip
-  :config
-  (xclip-mode 1))
-;; nlinum is more performant than linum
-(use-package nlinum
-  :config
-  (global-nlinum-mode t)
-  :init
-  (add-hook 'doc-view-mode-hook (lambda () (nlinum-mode 0)))
-  (add-hook 'term-mode-hook (lambda () (nlinum-mode 0))))
-
-
-
-;; magit config
-(use-package magit
-  :bind
-  (("C-c m" . magit)))
-
-;; yasnippets
-(use-package yasnippet
-  :init
-  (yas-global-mode))
-
-(use-package yasnippet-snippets
-  :after
-  (yasnippet))
-
-;; Puppet
-(use-package puppet-mode)
-
 ;; Ivy pass
 (use-package ivy-pass)
-
-;; org
-(use-package org
-  :custom
-  (org-capture-templates '(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
-			    "* TODO %?\n")
-			   ("j" "Journal" entry (file+datetree "~/org/journal.org")
-			    "* %?\nEntered on %U\n  %i"))))
-;; org-mode
-(use-package ox-hugo
-  :after
-  (org))
-
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode)
-  :after
-  (org))
-
-
 
 ;; (defun yequake-org-capture (&optional goto keys)
 ;;   "Call `org-capture' in a Yequake frame.
@@ -127,17 +47,6 @@
 ;;   :after
 ;;   (org))
 
-;; Use ivy
-(use-package ivy
-  :init
-  (ivy-mode 1)
-  :bind
-  (:map ivy-minibuffer-map
-	("C-m" . ivy-alt-done)
-	("C-j" . ivy-alt-done)))
-(use-package counsel
-  :after
-  (ivy))
 
 (use-package elpy
   :init
