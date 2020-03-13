@@ -4,4 +4,6 @@ elpy
 ido.last
 tramp
 transient
-%backup%~
+*~
+emacs-init.el
+custom.el

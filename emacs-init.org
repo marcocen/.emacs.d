@@ -1,0 +1,124 @@
+#+TITLE: Emacs config file
+#+AUTHOR: Marco Centurion
+#+EMAIL: mcenturion@protonmail.com
+
+* Base Settings
+
+This section contains some basic settings that aren't associated with any
+particular package or mode
+
+** Rebuild init
+The evaluation of this org-file creates emacs-init.el. In order not to load an
+older version of my config, I add this hook to delete that file any time emacs
+is killed.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (defun mcenturion/delete-emacs-init ()
+    (interactive)
+    (let ((configs "~/.emacs.d/emacs-init.el"))
+      (when configs
+        (delete-file configs))))
+  :hook (kill-emacs . mcenturion/delete-emacs-init))
+#+END_SRC
+
+** Custom.el
+Store customizations in a separate file
+
+#+BEGIN_SRC emacs-lisp
+(use-package cus-edit
+  :config
+  (setq custom-file "~/.emacs.d/custom.el")
+
+  (unless (file-exists-p custom-file)
+    (write-region "" nil custom-file))
+
+  (load custom-file))
+#+END_SRC
+
+** Personal information
+Set some personal information variables.
+
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Marco Centurión Virdó"
+      user-mail-address "mcenturion@fing.edu.uy"
+      calendar-location-name "Montevideo, UY")
+#+END_SRC
+
+** Sensible Defaults
+Use HRS's Sensible defaults
+
+* Graphic configurations
+
+This section contains settings that affect mostly the way emacs looks.
+
+** Theme selection
+Use the tango-dark theme, as it comes bundled with emacs by default and
+is reasonably good-looking and comfrotable to use.
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'tango-dark)
+#+END_SRC
+
+** Element hiding
+Hide all bars to maximize the space available for text editing. This
+also forces me to learn as many keybindings and function names as
+possible. Also add some information to the modeline and highlight
+matching parenthesis.
+
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(toggle-scroll-bar -1)
+(display-time-mode 1)
+(setq display-time-default-load-average nil)
+(column-number-mode t)
+(show-paren-mode 1)
+#+END_SRC
+
+** Misc
+
+Use the graphic clipboard to copy/pase.
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package xclip
+  :ensure t
+  :config
+  (xclip-mode 1))
+#+END_SRC
+
+Show line numbers.
+
+#+BEGIN_SRC emacs-lisp
+(use-package linum
+  :hook
+  ((prog-mode . linum-mode)
+  (text-mode . linum-mode)))
+#+END_SRC
+
+* Auto completion and snippets
+
+This section contains all settings related to autocompletion and
+snippets. This includes search, as auto-completion in searching is
+very important.
+
+** Electric pair mode
+Insert matching parenthesis, brackets, quotes, etc. when the opening
+one is inserted.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (electric-pair-mode 1))
+#+END_SRC
+
+** Ivy
+Use ivy as the autocompletion engine. In the future I'll investigate
+icomplete and analyze if I can use that instead of Ivy, but for now I
+need to be able to work comfortably.
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
