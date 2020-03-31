@@ -109,13 +109,22 @@ snippets. This includes search, as auto-completion in searching is
 very important.
 
 ** Electric pair mode
-Insert matching parenthesis, brackets, quotes, etc. when the opening
-one is inserted.
+   Insert matching parenthesis, brackets, quotes, etc. when the opening
+   one is inserted.
+
+   A not desired side-effect is that when used in conjunction with yasnippets in
+   org-mode, the insertion of "<" inserts ">". This clashes with a lot of
+   snippets, namely the "<src" snippet, where the expansion leaves the closing
+   ">" at the end of the expanded block. One workaround is to ignore the problem
+   and delete the closing ">", but that gets tideous, so for my use-case where I
+   don't use "<>" that much, I just simply disabled insertion of the closing ">".
 
 #+BEGIN_SRC emacs-lisp
-(use-package emacs
-  :config
-  (electric-pair-mode 1))
+  (use-package emacs
+    :config
+    (electric-pair-mode 1)
+    (add-function :before-until electric-pair-inhibit-predicate
+    (lambda (c) (eq c ?<))))
 #+END_SRC
 
 ** Ivy
