@@ -235,21 +235,35 @@ language.
 
 ** Org mode
 
+   Org-mode is much too big to explain in this config file. The only thing of
+   note is that I defined two capture templates, t and j, that save my todos and
+   journal entries in the respective files. I don't use org-capture but really should.
+
+   | Keybind | Action               |
+   |---------+----------------------|
+   | C-c c   | Launches org-capture |
+
 #+BEGIN_SRC emacs-lisp
-;; org
-(use-package org
-  :ensure t
-  :custom
-  (org-capture-templates '(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
-			    "* TODO %?\n")
-			   ("j" "Journal" entry (file+datetree "~/org/journal.org")
-			    "* %?\nEntered on %U\n  %i"))))
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode)
-  :after
-  (org))
+  (use-package org
+    :ensure t
+    :custom
+    (org-capture-templates '(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
+			      "* TODO %?\n")
+			     ("j" "Journal" entry (file+datetree "~/org/journal.org")
+			      "* %?\nEntered on %U\n  %i")))
+    :bind
+    ("C-c c" . org-capture))
+#+END_SRC
+
+   Use org-bullets to draw prettier bullets when displaying an org-file.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-bullets-mode)
+    :after
+    (org))
 #+END_SRC
 
 Export engines for org-mode
