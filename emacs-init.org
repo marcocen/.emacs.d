@@ -300,14 +300,46 @@ emacs.
 
 ** Dired
 
+   Dired is a file-explorer built into emacs. When inside a dired buffer
+   files/directories can be marked to take bulk actions, the buffer can be made
+   editable to change filenames and much, much more.
+
+   | Keybind | Action                                                      |
+   |---------+-------------------------------------------------------------|
+   | C-c d   | Prompts for a directory to open with dired, in other window |
+
+   When inside a dired buffer, the following keybindings were added:
+
+   | Keybind | Action                                                                            |
+   |---------+-----------------------------------------------------------------------------------|
+   | tab     | Expands or contracts a subtree in the same buffer                                 |
+   | C-tab   | Cycles a subtree, that is, it expands or contracts every subtree at the same time |
+   | S-tab   | Removes a subtree. Useful when trying to go up in the directory hierarchy         |
+
+   The following keybindings are useful when in a dired buffer:
+
+   | Keybind | Action                                                                                        |
+   |---------+-----------------------------------------------------------------------------------------------|
+   | M       | Edit a files mode                                                                             |
+   | d       | Marks a file for deletion                                                                     |
+   | u       | Drops all marks put upon a file                                                               |
+   | o       | Opens a file in the other window                                                              |
+   | C       | Copies a file                                                                                 |
+   | R       | Renames a file                                                                                |
+   | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
+   |         |                                                                                               |
 #+BEGIN_SRC emacs-lisp
-(use-package dired-subtree
-  :ensure t
-  :after dired
-  :config
-  (setq dired-subtree-use-backgrounds nil)
-  :bind (:map dired-mode-map
-              ("<tab>" . dired-subtree-toggle)
-              ("<C-tab>" . dired-subtree-cycle)
-              ("<S-iso-lefttab>" . dired-subtree-remove)))
+  (use-package dired-subtree
+    :defer t
+    :ensure t
+    :after dired
+    :config
+    (setq dired-subtree-use-backgrounds nil)
+    (setq dired-listing-switches "-lha --group-directories-first")
+    :bind
+    (("C-x d" . dired-other-window )
+     :map dired-mode-map
+     ("<tab>" . dired-subtree-toggle)
+     ("<C-tab>" . dired-subtree-cycle)
+     ("<S-iso-lefttab>" . dired-subtree-remove)))
 #+END_SRC
