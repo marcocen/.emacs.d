@@ -284,14 +284,18 @@ emacs.
 
 ** Magit
 
-Magit is a git frontend for emacs. Everything that can be done from the command
-line can be done from within magit.
+   Magit is a git frontend for emacs. Everything that can be done from the command
+   line can be done from within magit.
+
+   | Keybind | Action         |
+   |---------+----------------|
+   | C-c m   | Launches magit |
 
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :ensure t
-  :bind
-  (("C-c m" . magit)))
+  (use-package magit
+    :ensure t
+    :bind
+    (("C-c m" . magit)))
 #+END_SRC
 
 ** Dired
