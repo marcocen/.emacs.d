@@ -151,6 +151,19 @@ need to be able to work comfortably.
   :after
   (yasnippet))
 #+END_SRC
+** Which-key
+
+   Which key improves discoveravilty of new emacs functions by showing what
+   keybindings are available for a given prefix, once a determined time interval
+   has passed. This not only serves to refresh ones memory but to discover some
+   new functions or keybindings, even by accident!
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :config
+       (which-key-mode 1))
+   #+END_SRC
+
 * Programming Languages
 
 This section contains all settings directly related with a specific programming
