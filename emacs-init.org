@@ -27,14 +27,12 @@ is killed.
 Store customizations in a separate file
 
 #+BEGIN_SRC emacs-lisp
-(use-package cus-edit
-  :config
   (setq custom-file "~/.emacs.d/custom.el")
 
   (unless (file-exists-p custom-file)
     (write-region "" nil custom-file))
 
-  (load custom-file))
+  (load custom-file)
 #+END_SRC
 
 ** Personal information
