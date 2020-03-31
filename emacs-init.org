@@ -185,6 +185,26 @@ very important.
        (which-key-mode 1))
    #+END_SRC
 
+** Expand Region
+
+   Expand region allows the expansion of a selection in semantic intervals. That
+   allows for quick selection when one wants to enclose something in brackets,
+   quotes, or simply move a semantic block of text.
+
+   This adds the following keybindings:
+
+   | Binding         | Action                                                                 |
+   |-----------------+------------------------------------------------------------------------|
+   | C-;             | Expands the selected region                                            |
+   | C-: (C-Shift-;) | Contracts the selected region (useful when the expansion went too far) |
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :bind
+    (("C-;" . er/expand-region)
+     ("C-:" . er/contract-region)))
+#+END_SRC
+
 * Programming Languages
 
 This section contains all settings directly related with a specific programming
