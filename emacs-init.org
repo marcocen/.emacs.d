@@ -212,9 +212,25 @@ language.
 
 ** Puppet
 
+   Puppet is a Configuration Management System that uses a declarative language
+   based on ruby. This mode adds syntax highlighting and some useful
+   keybindings:
+
+   | Keybind | Action                                                           |
+   |---------+------------------------------------------------------------------|
+   | C-c C-a | Aligns all => of a given block, as per the puppet linting guides |
+   | C-c '   | Toggle the quotes around the point between single and double     |
+   | C-c ;   | Clears the string around point                                   |
+   | C-c C-j | Allows to jump between resources declared in a file              |
+   | C-v C-v | Runs a syntax check in the file                                  |
+   | C-c C-j | Runs a linter on the file                                        |
+
+   To use the sytax check or linter, puppet and puppet-lint must be installed in
+   the system.
+
 #+BEGIN_SRC emacs-lisp
-(use-package puppet-mode
-  :ensure t)
+  (use-package puppet-mode
+    :ensure t)
 #+END_SRC
 
 ** Org mode
