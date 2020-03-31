@@ -140,16 +140,23 @@ need to be able to work comfortably.
 
 ** Snippets
 
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :ensure t
-  :init
-  (yas-global-mode))
+   Yasnippet is a snippet engine for emacs. It allow one to define snippets
+   based on the mayor mode by using a short name and expanding it with <TAB>.
 
-(use-package yasnippet-snippets
-  :ensure t
-  :after
-  (yasnippet))
+   I use yasnippet-snippets, a collection of snippets for a lot of modes, but I
+   also have some snippets defined in my snippets directory. Those I maintain in
+   different repositories, for ease of sharing.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :init
+    (yas-global-mode))
+
+  (use-package yasnippet-snippets
+    :ensure t
+    :after
+    (yasnippet))
 #+END_SRC
 ** Which-key
 
