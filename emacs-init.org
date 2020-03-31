@@ -128,9 +128,14 @@ very important.
 #+END_SRC
 
 ** Ivy
-Use ivy as the autocompletion engine. In the future I'll investigate
-icomplete and analyze if I can use that instead of Ivy, but for now I
-need to be able to work comfortably.
+
+   Use ivy as the autocompletion engine. In the future I'll investigate
+   icomplete and analyze if I can use that instead of Ivy, but for now I
+   need to be able to work comfortably.
+
+   The binding done in the ivy declaration is to allow me to press Return on "."
+   or ".." and have ivy move to that directory instead of opening that directory
+   with dired.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
