@@ -347,4 +347,22 @@ emacs.
 	  ("<C-tab>" . dired-subtree-cycle)
 	  ("<S-iso-lefttab>" . dired-subtree-remove)))
 #+END_SRC
+** Projectile
+
+   Projectile is a package that adds features for interacting with projects.
+   This includes, but is not limited to, finding files in a project, grepping in
+   a project and opening a project directory in dired.
+
+   | Keybind | Action                              |
+   |---------+-------------------------------------|
+   | C-c p   | Launches the projectile command map |
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-mode +1)
+    :bind
+    (:map projectile-mode-map
+	  ("C-c p" . projectile-command-map)))
 #+END_SRC
