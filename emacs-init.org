@@ -327,19 +327,24 @@ emacs.
    | C       | Copies a file                                                                                 |
    | R       | Renames a file                                                                                |
    | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
-   |         |                                                                                               |
+   | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
 #+BEGIN_SRC emacs-lisp
+  (use-package emacs
+    :config
+    (setq dired-listing-switches "-lha --group-directories-first")
+    :bind
+    ("C-x d" . dired-other-window))
+
   (use-package dired-subtree
     :defer t
     :ensure t
     :after dired
     :config
     (setq dired-subtree-use-backgrounds nil)
-    (setq dired-listing-switches "-lha --group-directories-first")
     :bind
-    (("C-x d" . dired-other-window )
-     :map dired-mode-map
-     ("<tab>" . dired-subtree-toggle)
-     ("<C-tab>" . dired-subtree-cycle)
-     ("<S-iso-lefttab>" . dired-subtree-remove)))
+    (:map dired-mode-map
+	  ("<tab>" . dired-subtree-toggle)
+	  ("<C-tab>" . dired-subtree-cycle)
+	  ("<S-iso-lefttab>" . dired-subtree-remove)))
+#+END_SRC
 #+END_SRC
