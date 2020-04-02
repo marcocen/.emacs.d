@@ -247,9 +247,9 @@ language.
   (use-package org
     :ensure t
     :custom
-    (org-capture-templates '(("t" "Todo" entry (file+headline "~/Documents/TODO/todo.org" "Tasks")
+    (org-capture-templates '(("t" "Todo" entry (file+headline "~/notes/todo.org" "Inbox")
 			      "* TODO %?\n")
-			     ("j" "Journal" entry (file+datetree "~/org/journal.org")
+			     ("j" "Journal" entry (file+datetree "~/notes/journal.org")
 			      "* %?\nEntered on %U\n  %i")))
     :bind
     ("C-c c" . org-capture))
