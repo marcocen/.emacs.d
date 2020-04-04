@@ -251,7 +251,7 @@ language.
 			      "* TODO %?\n")
 			     ("j" "Journal" entry (file+datetree "~/notes/journal.org")
 			      "* %?\nEntered on %U\n  %i")))
-    (setq org-agenda-files '("~/notes/"))b
+    (setq org-agenda-files '("~/notes/"))
     :bind
     (("C-c c" . org-capture)
      ("C-c a" . org-agenda)))
