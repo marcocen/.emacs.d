@@ -147,7 +147,7 @@ very important.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
-  :ensure t
+  :disable
   :init
   (ivy-mode 1)
   :bind
@@ -155,9 +155,32 @@ very important.
 	("C-m" . ivy-alt-done)
 	("C-j" . ivy-alt-done)))
 (use-package counsel
-  :ensure t
+  :disable
   :after
   (ivy))
+#+END_SRC
+
+** icomplete
+
+#+BEGIN_SRC emacs-lisp
+  (use-package icomplete-vertical
+    :ensure t
+    :demand t
+    :custom
+    (completion-styles '(partial-completion substring))
+    (completion-category-overrides '((file (styles basic substring))))
+    (read-file-name-completion-ignore-case t)
+    (read-buffer-completion-ignore-case t)
+    (completion-ignore-case t)
+    :config
+    (icomplete-mode)
+    (icomplete-vertical-mode)
+    :bind (:map icomplete-minibuffer-map
+		("<down>" . icomplete-forward-completions)
+		("C-n" . icomplete-forward-completions)
+		("<up>" . icomplete-backward-completions)
+		("C-p" . icomplete-backward-completions)
+		("C-v" . icomplete-vertical-toggle)))
 #+END_SRC
 
 ** Snippets
