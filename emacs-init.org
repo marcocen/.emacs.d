@@ -251,7 +251,14 @@ language.
 			      "* TODO %?\n")
 			     ("j" "Journal" entry (file+datetree "~/notes/journal.org")
 			      "* %?\nEntered on %U\n  %i")))
-    (setq org-agenda-files '("~/notes/"))
+    (org-agenda-files '("~/notes/"))
+    (org-agenda-custom-commands
+     '(("c" "Simple agenda view"
+	((agenda "")
+	 (alltodo "")))
+       ("a" "Agesic"
+	((agenda "")
+	 (alltodo "")))))
     :bind
     (("C-c c" . org-capture)
      ("C-c a" . org-agenda)))
