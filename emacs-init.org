@@ -290,6 +290,13 @@ language.
        ("a" "Agesic"
 	((agenda "")
 	 (alltodo "")))))
+    (org-export-options-alist
+     '((:title "TITLE" nil nil parse)
+       (:date "DATE" nil nil parse)
+       (:author "AUTHOR" nil user-full-name parse)
+       (:email "EMAIL" nil user-mail-address t)
+       (:language "LANGUAGE" nil "es" t)
+       (:with-toc nil "toc" nil)))
     :bind
     (("C-c c" . org-capture)
      ("C-c a" . org-agenda)))
