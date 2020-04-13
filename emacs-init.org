@@ -62,7 +62,15 @@ Use the tango-dark theme, as it comes bundled with emacs by default and
 is reasonably good-looking and comfrotable to use.
 
 #+BEGIN_SRC emacs-lisp
-(load-theme 'tango-dark)
+;;(load-theme 'tango-dark)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package modus-vivendi-theme
+  :ensure t
+  :config
+  (load-theme 'modus-vivendi t)
+)
 #+END_SRC
 
 ** Element hiding
