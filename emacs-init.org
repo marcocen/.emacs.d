@@ -147,7 +147,7 @@ very important.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
-  :disable
+  :ensure t
   :init
   (ivy-mode 1)
   :bind
@@ -155,15 +155,20 @@ very important.
 	("C-m" . ivy-alt-done)
 	("C-j" . ivy-alt-done)))
 (use-package counsel
-  :disable
+  :ensure t
   :after
   (ivy))
 #+END_SRC
 
 ** icomplete
 
+The goal is to use icomplete instead of ivy, just in order to have one less
+dependency and learn more about the built-in functionalities of emacs, but for
+now, it is only a project to work on in my own time, so for now it's disabled.
+
 #+BEGIN_SRC emacs-lisp
   (use-package icomplete-vertical
+    :disabled
     :ensure t
     :demand t
     :custom
