@@ -303,6 +303,8 @@ language.
        (:language "LANGUAGE" nil "es" t)
        (:with-toc nil "toc" nil)))
     :bind
+    (:map org-mode-map
+	  ("C-u C-c C-e" . org-table-export))
     (("C-c c" . org-capture)
      ("C-c a" . org-agenda)))
 #+END_SRC
