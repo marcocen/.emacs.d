@@ -292,15 +292,17 @@ language.
 	:keys "t"
 	:keyword "TODO"
 	:template "* TODO %?"
-	:id "Inbox")
+	:headline "Inbox")
        ("Document"
 	:keys "d"
 	:keyword "DOC"
-	:template "* DOC %?")
+	:template "* DOC %?"
+	:headline "Inbox")
        ("Idea"
 	:keys "i"
 	:keyword "IDEA"
-	:template "* IDEA %?")))
+	:template "* IDEA %?"
+	:headline "Ideas")))
     (org-capture-templates
      (doct
       `((:group "Basic"
