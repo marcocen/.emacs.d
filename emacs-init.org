@@ -113,11 +113,12 @@
 
 * Auto completion and snippets
 
-This section contains all settings related to autocompletion and
-snippets. This includes search, as auto-completion in searching is
-very important.
+  This section contains all settings related to autocompletion and
+  snippets. This includes search, as auto-completion in searching is
+  very important.
 
 ** Electric pair mode
+
    Insert matching parenthesis, brackets, quotes, etc. when the opening
    one is inserted.
 
@@ -128,13 +129,13 @@ very important.
    and delete the closing ">", but that gets tideous, so for my use-case where I
    don't use "<>" that much, I just simply disabled insertion of the closing ">".
 
-#+BEGIN_SRC emacs-lisp
-  (use-package emacs
-    :config
-    (electric-pair-mode 1)
-    (add-function :before-until electric-pair-inhibit-predicate
-    (lambda (c) (eq c ?<))))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package emacs
+       :config
+       (electric-pair-mode 1)
+       (add-function :before-until electric-pair-inhibit-predicate
+       (lambda (c) (eq c ?<))))
+   #+END_SRC
 
 ** Ivy
 
@@ -146,48 +147,48 @@ very important.
    or ".." and have ivy move to that directory instead of opening that directory
    with dired.
 
-#+BEGIN_SRC emacs-lisp
-(use-package ivy
-  :ensure t
-  :init
-  (ivy-mode 1)
-  :bind
-  (:map ivy-minibuffer-map
-	("C-m" . ivy-alt-done)
-	("C-j" . ivy-alt-done)))
-(use-package counsel
-  :ensure t
-  :after
-  (ivy))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package ivy
+       :ensure t
+       :init
+       (ivy-mode 1)
+       :bind
+       (:map ivy-minibuffer-map
+	     ("C-m" . ivy-alt-done)
+	     ("C-j" . ivy-alt-done)))
+     (use-package counsel
+       :ensure t
+       :after
+       (ivy))
+   #+END_SRC
 
 ** icomplete
 
-The goal is to use icomplete instead of ivy, just in order to have one less
-dependency and learn more about the built-in functionalities of emacs, but for
-now, it is only a project to work on in my own time, so for now it's disabled.
+   The goal is to use icomplete instead of ivy, just in order to have one less
+   dependency and learn more about the built-in functionalities of emacs, but for
+   now, it is only a project to work on in my own time, so for now it's disabled.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package icomplete-vertical
-    :disabled
-    :ensure t
-    :demand t
-    :custom
-    (completion-styles '(partial-completion substring))
-    (completion-category-overrides '((file (styles basic substring))))
-    (read-file-name-completion-ignore-case t)
-    (read-buffer-completion-ignore-case t)
-    (completion-ignore-case t)
-    :config
-    (icomplete-mode)
-    (icomplete-vertical-mode)
-    :bind (:map icomplete-minibuffer-map
-		("<down>" . icomplete-forward-completions)
-		("C-n" . icomplete-forward-completions)
-		("<up>" . icomplete-backward-completions)
-		("C-p" . icomplete-backward-completions)
-		("C-v" . icomplete-vertical-toggle)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package icomplete-vertical
+       :disabled
+       :ensure t
+       :demand t
+       :custom
+       (completion-styles '(partial-completion substring))
+       (completion-category-overrides '((file (styles basic substring))))
+       (read-file-name-completion-ignore-case t)
+       (read-buffer-completion-ignore-case t)
+       (completion-ignore-case t)
+       :config
+       (icomplete-mode)
+       (icomplete-vertical-mode)
+       :bind (:map icomplete-minibuffer-map
+		   ("<down>" . icomplete-forward-completions)
+		   ("C-n" . icomplete-forward-completions)
+		   ("<up>" . icomplete-backward-completions)
+		   ("C-p" . icomplete-backward-completions)
+		   ("C-v" . icomplete-vertical-toggle)))
+   #+END_SRC
 
 ** Snippets
 
@@ -198,17 +199,17 @@ now, it is only a project to work on in my own time, so for now it's disabled.
    also have some snippets defined in my snippets directory. Those I maintain in
    different repositories, for ease of sharing.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :ensure t
-    :init
-    (yas-global-mode))
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :init
+       (yas-global-mode))
 
-  (use-package yasnippet-snippets
-    :ensure t
-    :after
-    (yasnippet))
-#+END_SRC
+     (use-package yasnippet-snippets
+       :ensure t
+       :after
+       (yasnippet))
+   #+END_SRC
 ** Which-key
 
    Which key improves discoveravilty of new emacs functions by showing what
@@ -235,12 +236,12 @@ now, it is only a project to work on in my own time, so for now it's disabled.
    | C-;             | Expands the selected region                                            |
    | C-: (C-Shift-;) | Contracts the selected region (useful when the expansion went too far) |
 
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :bind
-    (("C-;" . er/expand-region)
-     ("C-:" . er/contract-region)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package expand-region
+       :bind
+       (("C-;" . er/expand-region)
+	("C-:" . er/contract-region)))
+   #+END_SRC
 
 * Programming Languages
 
