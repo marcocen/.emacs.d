@@ -271,22 +271,76 @@ language.
 
 ** Org mode
 
-   Org-mode is much too big to explain in this config file. The only thing of
-   note is that I defined two capture templates, t and j, that save my todos and
-   journal entries in the respective files. I don't use org-capture but really should.
+   Use doct to more simply declare capture templates.
+
+   I use a couple of capture templates, but not as much as I should. I have a
+   basic todo, a journal (this is the one I use the least) and a dedicated doc
+   for each place I work at. Nested inside each todo are the same three basic
+   templates:
+
+   | Template | Use                                                                              |
+   | Todo     | A simple todo item, to catch things that I should do sometime in the future      |
+   | Document | To capture webpages, books, etc. that i think will be useful for a given project |
+   | Idea     | For general ideas that I have on a given subject                                 |
+
+#+BEGIN_SRC emacs-lisp
+  (use-package doct
+    :ensure t
+    :custom
+    (my/basic-capture-types
+     '(("TODO"
+	:keys "t"
+	:keyword "TODO"
+	:template "* TODO %?"
+	:id "Inbox")
+       ("Document"
+	:keys "d"
+	:keyword "DOC"
+	:template "* DOC %?")
+       ("Idea"
+	:keys "i"
+	:keyword "IDEA"
+	:template "* IDEA %?")))
+    (org-capture-templates
+     (doct
+      `((:group "Basic"
+		:file "~/notes/todo.org"
+		:children ,my/basic-capture-types)
+	("Agesic" :keys "a" :file "~/notes/agesic.org"
+	 :children ,my/basic-capture-types)
+	("Uri" :keys "u" :file "~/notes/uri.org"
+	 :children ,my/basic-capture-types)))))
+#+END_SRC
+
+   I declare an alternative keybinding to export an org-table directly to a csv
+   separated by ';'. For that I had to declare an alternative convertor as well
+   as an alternative org-table-export.
+
+   | Keybind     | Action                                       |
+   | C-u C-c C-e | Exports an org-table to csv separated by ';' |
+
+   The previously defined capture templates are accessed via org-capture and
+   viewed with org-agenda.
 
    | Keybind | Action               |
    |---------+----------------------|
    | C-c c   | Launches org-capture |
+   | C-c a   | Launches org-agenda  |
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :ensure t
+    :config
+    (defun mcv/orgtbl-to-csv (table params)
+      "Convert the orgtbl-mode table to CSV with ';' separator"
+      (orgtbl-to-generic table
+			 (org-combine-plists '(:sep ";" :fmt org-quote-csv-field)
+					     params)))
+    (defun mcv/org-table-export-csv ()
+      (interactive)
+      (let ((file (read-file-name "Export table to:")))
+	(org-table-export file "mcenturion/orgtbl-to-csv")))
     :custom
-    (org-capture-templates '(("t" "Todo" entry (file+headline "~/notes/todo.org" "Inbox")
-			      "* TODO %?\n")
-			     ("j" "Journal" entry (file+datetree "~/notes/journal.org")
-			      "* %?\nEntered on %U\n  %i")))
     (org-agenda-files '("~/notes/"))
     (org-agenda-custom-commands
      '(("c" "Simple agenda view"
@@ -294,7 +348,7 @@ language.
 	 (alltodo "")))
        ("a" "Agesic"
 	((agenda "")
-	 (alltodo "")))))
+	 (alltodo "adsf")))))
     (org-export-options-alist
      '((:title "TITLE" nil nil parse)
        (:date "DATE" nil nil parse)
@@ -303,10 +357,10 @@ language.
        (:language "LANGUAGE" nil "es" t)
        (:with-toc nil "toc" nil)))
     :bind
-    (:map org-mode-map
-	  ("C-u C-c C-e" . org-table-export))
     (("C-c c" . org-capture)
-     ("C-c a" . org-agenda)))
+     ("C-c a" . org-agenda)
+     (:map org-mode-map
+	   ("C-u C-c C-e" . mcv/org-table-export-csv))))
 #+END_SRC
 
    Use org-bullets to draw prettier bullets when displaying an org-file.
