@@ -245,8 +245,8 @@
 
 * Programming Languages
 
-This section contains all settings directly related with a specific programming
-language.
+  This section contains all settings directly related with a specific programming
+  language.
 
 ** Puppet
 
@@ -266,10 +266,10 @@ language.
    To use the sytax check or linter, puppet and puppet-lint must be installed in
    the system.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package puppet-mode
-    :ensure t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package puppet-mode
+       :ensure t)
+   #+END_SRC
 
 ** Org mode
 
