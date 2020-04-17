@@ -59,60 +59,57 @@
    #+END_SRC
 * Graphic configurations
 
-This section contains settings that affect mostly the way emacs looks.
+  This section contains settings that affect mostly the way emacs looks.
 
 ** Theme selection
-Use the tango-dark theme, as it comes bundled with emacs by default and
-is reasonably good-looking and comfrotable to use.
 
-#+BEGIN_SRC emacs-lisp
-;;(load-theme 'tango-dark)
-#+END_SRC
+   Use prots modus-vivendi theme. It has great contrast for everything I've seen
+   so far.
 
-#+BEGIN_SRC emacs-lisp
-(use-package modus-vivendi-theme
-  :ensure t
-  :config
-  (load-theme 'modus-vivendi t)
-)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package modus-vivendi-theme
+       :ensure t
+       :config
+       (load-theme 'modus-vivendi t))
+   #+END_SRC
 
 ** Element hiding
-Hide all bars to maximize the space available for text editing. This
-also forces me to learn as many keybindings and function names as
-possible. Also add some information to the modeline and highlight
-matching parenthesis.
 
-#+BEGIN_SRC emacs-lisp
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
-(display-time-mode 1)
-(setq display-time-default-load-average nil)
-(column-number-mode t)
-(show-paren-mode 1)
-#+END_SRC
+   Hide all bars to maximize the space available for text editing. This
+   also forces me to learn as many keybindings and function names as
+   possible. Also add some information to the modeline and highlight
+   matching parenthesis.
+
+   #+BEGIN_SRC emacs-lisp
+     (menu-bar-mode -1)
+     (tool-bar-mode -1)
+     (toggle-scroll-bar -1)
+     (display-time-mode 1)
+     (setq display-time-default-load-average nil)
+     (column-number-mode t)
+     (show-paren-mode 1)
+   #+END_SRC
 
 ** Misc
 
-Use the graphic clipboard to copy/pase.
+   Use the graphic clipboard to copy/pase.
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 
-(use-package xclip
-  :ensure t
-  :config
-  (xclip-mode 1))
-#+END_SRC
+     (use-package xclip
+       :ensure t
+       :config
+       (xclip-mode 1))
+   #+END_SRC
 
-Show line numbers.
+   Show line numbers.
 
-#+BEGIN_SRC emacs-lisp
-(use-package linum
-  :hook
-  ((prog-mode . linum-mode)
-  (text-mode . linum-mode)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package linum
+       :hook
+       ((prog-mode . linum-mode)
+       (text-mode . linum-mode)))
+   #+END_SRC
 
 * Auto completion and snippets
 
