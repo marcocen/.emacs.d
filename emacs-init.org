@@ -376,17 +376,23 @@ language.
     (org))
 #+END_SRC
 
-Export engines for org-mode
+   Configure yequake to have a drop down for org-capture anywhere.
 
 #+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode)
-  :after
-  (org))
-
+  (use-package yequake
+    :ensure t
+    :custom
+    (yequake-frames
+     '(("org-capture"
+	(buffer-fns . (yequake-org-capture))
+	(width . 0.75)
+	(height . 0.5)
+	(alpha . 0.95)
+	(frame-parameters . ((undecorated . t)
+			     (skip-taskbar . t)
+			     (sticky . t)))))))
 #+END_SRC
+
 * Tools
 
 This section contains the configuration of the different tools used inside of
