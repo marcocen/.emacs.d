@@ -341,7 +341,7 @@ language.
     (defun mcv/org-table-export-csv ()
       (interactive)
       (let ((file (read-file-name "Export table to:")))
-	(org-table-export file "mcenturion/orgtbl-to-csv")))
+	(org-table-export file "mcv/orgtbl-to-csv")))
     :custom
     (org-agenda-files '("~/notes/"))
     (org-agenda-custom-commands
