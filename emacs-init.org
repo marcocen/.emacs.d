@@ -452,8 +452,8 @@
 
 * Tools
 
-This section contains the configuration of the different tools used inside of
-emacs.
+  This section contains the configuration of the different tools used inside of
+  emacs.
 
 ** Magit
 
@@ -464,12 +464,12 @@ emacs.
    |---------+----------------|
    | C-c m   | Launches magit |
 
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :bind
-    (("C-c m" . magit)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :bind
+       (("C-c m" . magit)))
+   #+END_SRC
 
 ** Dired
 
@@ -501,25 +501,25 @@ emacs.
    | R       | Renames a file                                                                                |
    | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
    | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
-#+BEGIN_SRC emacs-lisp
-  (use-package emacs
-    :config
-    (setq dired-listing-switches "-lha --group-directories-first")
-    :bind
-    ("C-x d" . dired-other-window))
+   #+BEGIN_SRC emacs-lisp
+     (use-package emacs
+       :config
+       (setq dired-listing-switches "-lha --group-directories-first")
+       :bind
+       ("C-x d" . dired-other-window))
 
-  (use-package dired-subtree
-    :defer t
-    :ensure t
-    :after dired
-    :config
-    (setq dired-subtree-use-backgrounds nil)
-    :bind
-    (:map dired-mode-map
-	  ("<tab>" . dired-subtree-toggle)
-	  ("<C-tab>" . dired-subtree-cycle)
-	  ("<S-iso-lefttab>" . dired-subtree-remove)))
-#+END_SRC
+     (use-package dired-subtree
+       :defer t
+       :ensure t
+       :after dired
+       :config
+       (setq dired-subtree-use-backgrounds nil)
+       :bind
+       (:map dired-mode-map
+	     ("<tab>" . dired-subtree-toggle)
+	     ("<C-tab>" . dired-subtree-cycle)
+	     ("<S-iso-lefttab>" . dired-subtree-remove)))
+   #+END_SRC
 ** Projectile
 
    Projectile is a package that adds features for interacting with projects.
@@ -530,12 +530,12 @@ emacs.
    |---------+-------------------------------------|
    | C-c p   | Launches the projectile command map |
 
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    (projectile-mode +1)
-    :bind
-    (:map projectile-mode-map
-	  ("C-c p" . projectile-command-map)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+       (projectile-mode +1)
+       :bind
+       (:map projectile-mode-map
+	     ("C-c p" . projectile-command-map)))
+   #+END_SRC
