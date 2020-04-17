@@ -271,127 +271,182 @@ language.
 
 ** Org mode
 
-   Use doct to more simply declare capture templates.
+*** Org-capture and org-agenda
 
-   I use a couple of capture templates, but not as much as I should. I have a
-   basic todo, a journal (this is the one I use the least) and a dedicated doc
-   for each place I work at. Nested inside each todo are the same three basic
-   templates:
+    Org has capture templates, to add items to org-documents with only a few
+    keystrokes
 
-   | Template | Use                                                                              |
-   | Todo     | A simple todo item, to catch things that I should do sometime in the future      |
-   | Document | To capture webpages, books, etc. that i think will be useful for a given project |
-   | Idea     | For general ideas that I have on a given subject                                 |
+    Based on that one can quicky capture ideas without wasting time and later on
+    work on them, reorganize them, etc.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package doct
-    :ensure t
-    :custom
-    (my/basic-capture-types
-     '(("TODO"
-	:keys "t"
-	:keyword "TODO"
-	:template "* TODO %?"
-	:headline "Inbox")
-       ("Document"
-	:keys "d"
-	:keyword "DOC"
-	:template "* DOC %?"
-	:headline "Inbox")
-       ("Idea"
-	:keys "i"
-	:keyword "IDEA"
-	:template "* IDEA %?"
-	:headline "Ideas")))
-    (org-capture-templates
-     (doct
-      `((:group "Basic"
-		:file "~/notes/todo.org"
-		:children ,my/basic-capture-types)
-	("Agesic" :keys "a" :file "~/notes/agesic.org"
-	 :children ,my/basic-capture-types)
-	("Uri" :keys "u" :file "~/notes/uri.org"
-	 :children ,my/basic-capture-types)))))
-#+END_SRC
+    I use a couple of capture templates, but not as much as I should. I have a
+    basic todo and a dedicated doc for each place I work at. To quickly check
+    my todos for a given worksite, I define custom agenda commands that use
+    only the corresponding file.
 
-   I declare an alternative keybinding to export an org-table directly to a csv
-   separated by ';'. For that I had to declare an alternative convertor as well
-   as an alternative org-table-export.
+    | Keybind | Action               |
+    |---------+----------------------|
+    | C-c c   | Launches org-capture |
+    | C-c a   | Launches org-agenda  |
 
-   | Keybind     | Action                                       |
-   | C-u C-c C-e | Exports an org-table to csv separated by ';' |
+    | Agenda command | view                                 |
+    |----------------+--------------------------------------|
+    | a              | All todos on my "agesic" agenda file |
+    | u              | All todos on my "uri" agenda file    |
 
-   The previously defined capture templates are accessed via org-capture and
-   viewed with org-agenda.
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+	:ensure t
+	:custom
+	(org-agenda-files '("~/notes/"))
+	(org-agenda-custom-commands
+	 '(("a" "Agesic" todo "*"
+	    ((org-agenda-files '("~/notes/agesic.org"))))
+	   ("u" "Uri" todo "*"
+	    ((org-agenda-files '("~/notes/uri.org"))))))
+	:bind
+	(("C-c c" . org-capture)
+	 ("C-c a" . org-agenda)))
+    #+END_SRC
 
-   | Keybind | Action               |
-   |---------+----------------------|
-   | C-c c   | Launches org-capture |
-   | C-c a   | Launches org-agenda  |
+    I also define a new TODO state, =IDEA=, to represent those things that I
+    think would be interesting to do but I haven't given much thought.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package org
-    :ensure t
-    :config
-    (defun mcv/orgtbl-to-csv (table params)
-      "Convert the orgtbl-mode table to CSV with ';' separator"
-      (orgtbl-to-generic table
-			 (org-combine-plists '(:sep ";" :fmt org-quote-csv-field)
-					     params)))
-    (defun mcv/org-table-export-csv ()
-      (interactive)
-      (let ((file (read-file-name "Export table to:")))
-	(org-table-export file "mcv/orgtbl-to-csv")))
-    :custom
-    (org-agenda-files '("~/notes/"))
-    (org-agenda-custom-commands
-     '(("c" "Simple agenda view"
-	((agenda "")
-	 (alltodo "")))
-       ("a" "Agesic"
-	((agenda "")
-	 (alltodo "adsf")))))
-    (org-export-options-alist
-     '((:title "TITLE" nil nil parse)
-       (:date "DATE" nil nil parse)
-       (:author "AUTHOR" nil user-full-name parse)
-       (:email "EMAIL" nil user-mail-address t)
-       (:language "LANGUAGE" nil "es" t)
-       (:with-toc nil "toc" nil)))
-    :bind
-    (("C-c c" . org-capture)
-     ("C-c a" . org-agenda)
-     (:map org-mode-map
-	   ("C-u C-c C-e" . mcv/org-table-export-csv))))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+	:ensure t
+	:custom
+	(org-todo-keywords
+	       '((sequence "IDEA" "TODO" "|" "DONE"))))
+    #+END_SRC
 
-   Use org-bullets to draw prettier bullets when displaying an org-file.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook 'org-bullets-mode)
-    :after
-    (org))
-#+END_SRC
+**** Doct
 
-   Configure yequake to have a drop down for org-capture anywhere.
+     Doct is a module that allows one to declaratively define org capture
+     templates. Doing so one can simplify the code needed and the templates end
+     up being much more readlable.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package yequake
-    :ensure t
-    :custom
-    (yequake-frames
-     '(("org-capture"
-	(buffer-fns . (yequake-org-capture))
-	(width . 0.75)
-	(height . 0.5)
-	(alpha . 0.95)
-	(frame-parameters . ((undecorated . t)
-			     (skip-taskbar . t)
-			     (sticky . t)))))))
-#+END_SRC
+
+     | Template | Use                                                                              |
+     | Todo     | A simple todo item, to catch things that I should do sometime in the future      |
+     | Document | To capture webpages, books, etc. that i think will be useful for a given project |
+     | Idea     | For general ideas that I have on a given subject                                 |
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package doct
+	 :ensure t
+	 :custom
+	 (my/basic-capture-types
+	  '(("TODO"
+	     :keys "t"
+	     :keyword "TODO"
+	     :template "* TODO %?"
+	     :headline "Inbox")
+	    ("Document"
+	     :keys "d"
+	     :keyword "DOC"
+	     :template "* DOC %?"
+	     :headline "Inbox")
+	    ("Idea"
+	     :keys "i"
+	     :keyword "IDEA"
+	     :template "* IDEA %?"
+	     :headline "Ideas")))
+	 (org-capture-templates
+	  (doct
+	   `((:group "Basic"
+		     :file "~/notes/todo.org"
+		     :children ,my/basic-capture-types)
+	     ("Agesic" :keys "a" :file "~/notes/agesic.org"
+	      :children ,my/basic-capture-types)
+	     ("Uri" :keys "u" :file "~/notes/uri.org"
+	      :children ,my/basic-capture-types)))))
+     #+END_SRC
+**** Yequake
+
+     Yequake is a package that allows one to have a drop-down emacs frame. This
+     is useful for a bunch of things but the thing that most interests me is
+     that it allows me to have a dropdown with an org-capture buffer.
+
+     Then I can use any keybinding that I want in my system to launch an
+     org-capture by running:
+
+     #+BEGIN_SRC sh
+       emacsclient -n -e '(yequake-toggle "org-capture")'
+     #+END_SRC
+
+     #+BEGIN_SRC emacs-lisp
+      (use-package yequake
+	:ensure t
+	:custom
+	(yequake-frames
+	 '(("org-capture"
+	    (buffer-fns . (yequake-org-capture))
+	    (width . 0.75)
+	    (height . 0.5)
+	    (alpha . 0.90)
+	    (frame-parameters . ((undecorated . t)
+				 (skip-taskbar . t)
+				 (sticky . t)))))))
+     #+END_SRC
+
+
+
+*** org-mode customizations
+
+    I declare an alternative keybinding to export an org-table directly to a csv
+    separated by ';'. For that I had to declare an alternative convertor as well
+    as an alternative org-table-export.
+
+    | Keybind     | Action                                       |
+    | C-u C-c C-e | Exports an org-table to csv separated by ';' |
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+	:ensure t
+	:config
+	(defun mcv/orgtbl-to-csv (table params)
+	  "Convert the orgtbl-mode table to CSV with ';' separator"
+	  (orgtbl-to-generic table
+			     (org-combine-plists '(:sep ";" :fmt org-quote-csv-field)
+						 params)))
+	(defun mcv/org-table-export-csv ()
+	  (interactive)
+	  (let ((file (read-file-name "Export table to:")))
+	    (org-table-export file "mcv/orgtbl-to-csv")))
+	:bind
+	((:map org-mode-map
+	       ("C-u C-c C-e" . mcv/org-table-export-csv))))
+    #+END_SRC
+
+    I don't normally use all options that the default export template provides,
+    so I redefine =org-export-options-alist= to contain only those that I want.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+	:ensure t
+	:custom
+	(org-export-options-alist
+	 '((:title "TITLE" nil nil parse)
+	   (:date "DATE" nil nil parse)
+	   (:author "AUTHOR" nil user-full-name parse)
+	   (:email "EMAIL" nil user-mail-address t)
+	   (:language "LANGUAGE" nil "es" t)
+	   (:with-toc nil "toc" nil))))
+
+    #+END_SRC
+
+    Use org-bullets to draw prettier bullets when displaying an org-file.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+	:ensure t
+	:config
+	(add-hook 'org-mode-hook 'org-bullets-mode)
+	:after
+	(org))
+    #+END_SRC
 
 * Tools
 
