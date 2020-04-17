@@ -4,55 +4,59 @@
 
 * Base Settings
 
-This section contains some basic settings that aren't associated with any
-particular package or mode
+  This section contains some basic settings that aren't associated with any
+  particular package or mode
 
 ** Rebuild init
-The evaluation of this org-file creates emacs-init.el. In order not to load an
-older version of my config, I add this hook to delete that file any time emacs
-is killed.
 
-#+BEGIN_SRC emacs-lisp
-(use-package emacs
-  :config
-  (defun mcenturion/delete-emacs-init ()
-    (interactive)
-    (let ((configs "~/.emacs.d/emacs-init.el"))
-      (when configs
-        (delete-file configs))))
-  :hook (kill-emacs . mcenturion/delete-emacs-init))
-#+END_SRC
+   The evaluation of this org-file creates emacs-init.el. In order not to load an
+   older version of my config, I add this hook to delete that file any time emacs
+   is killed.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package emacs
+       :config
+       (defun mcenturion/delete-emacs-init ()
+	 (interactive)
+	 (let ((configs "~/.emacs.d/emacs-init.el"))
+	   (when configs
+	     (delete-file configs))))
+       :hook (kill-emacs . mcenturion/delete-emacs-init))
+   #+END_SRC
 
 ** Custom.el
-Store customizations in a separate file
 
-#+BEGIN_SRC emacs-lisp
-  (setq custom-file "~/.emacs.d/custom.el")
+   Store customizations in a separate file
 
-  (unless (file-exists-p custom-file)
-    (write-region "" nil custom-file))
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-file "~/.emacs.d/custom.el")
 
-  (load custom-file)
-#+END_SRC
+     (unless (file-exists-p custom-file)
+       (write-region "" nil custom-file))
+
+     (load custom-file)
+   #+END_SRC
 
 ** Personal information
-Set some personal information variables.
 
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Marco Centurión Virdó"
-      user-mail-address "mcenturion@fing.edu.uy"
-      calendar-location-name "Montevideo, UY")
-#+END_SRC
+   Set some personal information variables.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq user-full-name "Marco Centurión Virdó"
+	   user-mail-address "mcenturion@fing.edu.uy"
+	   calendar-location-name "Montevideo, UY")
+   #+END_SRC
 
 ** Sensible Defaults
-Load the sensible-defaults file to use its functions at a later point.
-#+BEGIN_SRC emacs-lisp
-(load-file "~/.emacs.d/local/sensible-defaults.el")
-(sensible-defaults/use-all-settings)
-(sensible-defaults/use-all-keybindings)
-(sensible-defaults/backup-to-temp-directory)
-#+END_SRC
 
+   Load the sensible-defaults file to use its functions at a later point.
+
+   #+BEGIN_SRC emacs-lisp
+     (load-file "~/.emacs.d/local/sensible-defaults.el")
+     (sensible-defaults/use-all-settings)
+     (sensible-defaults/use-all-keybindings)
+     (sensible-defaults/backup-to-temp-directory)
+   #+END_SRC
 * Graphic configurations
 
 This section contains settings that affect mostly the way emacs looks.
