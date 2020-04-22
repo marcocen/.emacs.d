@@ -273,6 +273,15 @@
 
 ** Org mode
 
+   I use org-mode as my fundamental mode. I find it much more useful when I open
+   any kind of buffer.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package org
+       :custom
+       (major-mode 'org-mode))
+   #+END_SRC
+
 *** Org-capture and org-agenda
 
     Org has capture templates, to add items to org-documents with only a few
