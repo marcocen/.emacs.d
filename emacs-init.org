@@ -459,6 +459,18 @@
 	(org))
     #+END_SRC
 
+** Ledger
+
+   Ledger is both a format and program designed for bookkeping. It uses a
+   double-entry style and it's what I am trying to use to keep track of my
+   expenses.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package ledger-mode
+       :ensure t
+       :mode ("\\.dat\\'" . ledger-mode))
+   #+END_SRC
+
 * Tools
 
   This section contains the configuration of the different tools used inside of
