@@ -560,3 +560,45 @@
        (:map projectile-mode-map
 	     ("C-c p" . projectile-command-map)))
    #+END_SRC
+
+** Gnus
+
+   Configure gnus to use the appropiate imap and smtp servers
+
+   #+BEGIN_SRC emacs-lisp
+     (setq gnus-select-method '(nnimap "imap.fing.edu.uy"))
+     (setq send-mail-function    'smtpmail-send-it
+	   smtpmail-smtp-server  "smtp.fing.edu.uy"
+	   smtpmail-stream-type  'starttls
+	   smtpmail-smtp-service 25
+	   user-full-name        "Marco Centurion"
+	   user-mail-address     "mcenturion@fing.edu.uy"
+	   message-signature     "Marco Centurion
+     Unidad de Recursos Informáticos
+     Facultad de Ingeniería - UdelaR")
+   #+END_SRC
+
+   Set gnus as the default email client
+
+   #+BEGIN_SRC emacs-lisp
+     (setq mail-user-agent 'gnus-user-agent)
+   #+END_SRC
+
+   Configure some display options
+
+   #+BEGIN_SRC emacs-lisp
+     (setq gnus-use-full-window nil)
+     (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+     (setq gnus-topic-line-format "%i[%n %A] %v\n")
+     (setq gnus-thread-sort-functions
+           '(gnus-thread-sort-by-most-recent-date))
+   #+END_SRC
+
+   Configure gnus to fetch new email every 2 minutes
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'gnus-startup-hook
+	  '(lambda ()
+	       (gnus-demon-init)
+	       (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
+   #+END_SRC
