@@ -1,0 +1,3 @@
+[submodule "snippets/puppet-mode"]
+	path = snippets/puppet-mode
+	url = git@github.com:marcocen/yasnippet-puppet.git
