@@ -150,6 +150,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
        :ensure t
+       :demand
        :init
        (ivy-mode 1)
        :bind
@@ -554,6 +555,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
        :ensure t
+       :demand
        :config
        (projectile-mode +1)
        :bind
