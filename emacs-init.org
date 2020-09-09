@@ -63,14 +63,14 @@
 
 ** Theme selection
 
-   Use prots modus-vivendi theme. It has great contrast for everything I've seen
+   Use prots modus-operandi theme. It has great contrast for everything I've seen
    so far.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package modus-vivendi-theme
+     (use-package modus-operandi-theme
        :ensure t
        :config
-       (load-theme 'modus-vivendi t))
+       (load-theme 'modus-operandi t))
    #+END_SRC
 
 ** Element hiding
