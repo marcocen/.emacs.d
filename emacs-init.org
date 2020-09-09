@@ -150,6 +150,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
        :ensure t
+       :demand
        :init
        (ivy-mode 1)
        :bind
@@ -160,34 +161,6 @@
        :ensure t
        :after
        (ivy))
-   #+END_SRC
-
-** icomplete
-
-   The goal is to use icomplete instead of ivy, just in order to have one less
-   dependency and learn more about the built-in functionalities of emacs, but for
-   now, it is only a project to work on in my own time, so for now it's disabled.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package icomplete-vertical
-       :disabled
-       :ensure t
-       :demand t
-       :custom
-       (completion-styles '(partial-completion substring))
-       (completion-category-overrides '((file (styles basic substring))))
-       (read-file-name-completion-ignore-case t)
-       (read-buffer-completion-ignore-case t)
-       (completion-ignore-case t)
-       :config
-       (icomplete-mode)
-       (icomplete-vertical-mode)
-       :bind (:map icomplete-minibuffer-map
-		   ("<down>" . icomplete-forward-completions)
-		   ("C-n" . icomplete-forward-completions)
-		   ("<up>" . icomplete-backward-completions)
-		   ("C-p" . icomplete-backward-completions)
-		   ("C-v" . icomplete-vertical-toggle)))
    #+END_SRC
 
 ** Snippets
@@ -459,18 +432,6 @@
 	(org))
     #+END_SRC
 
-** Ledger
-
-   Ledger is both a format and program designed for bookkeping. It uses a
-   double-entry style and it's what I am trying to use to keep track of my
-   expenses.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package ledger-mode
-       :ensure t
-       :mode ("\\.dat\\'" . ledger-mode))
-   #+END_SRC
-
 * Tools
 
   This section contains the configuration of the different tools used inside of
@@ -554,6 +515,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
        :ensure t
+       :demand
        :config
        (projectile-mode +1)
        :bind
