@@ -528,7 +528,11 @@
    Configure gnus to use the appropiate imap and smtp servers
 
    #+BEGIN_SRC emacs-lisp
-     (setq gnus-select-method '(nnimap "imap.fing.edu.uy"))
+     (setq gnus-select-method '(nnnil ""))
+     (setq gnus-secondary-select-methods
+	   '((nntp "news.gwene.org")
+	     (nnimap "FING"
+		     (nnimap-address "imap.fing.edu.uy"))))
      (setq send-mail-function    'smtpmail-send-it
 	   smtpmail-smtp-server  "smtp.fing.edu.uy"
 	   smtpmail-stream-type  'starttls
