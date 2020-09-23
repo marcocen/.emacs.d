@@ -57,6 +57,7 @@
      (sensible-defaults/use-all-keybindings)
      (sensible-defaults/backup-to-temp-directory)
    #+END_SRC
+
 * Graphic configurations
 
   This section contains settings that affect mostly the way emacs looks.
@@ -111,11 +112,10 @@
        (text-mode . linum-mode)))
    #+END_SRC
 
-* Auto completion and snippets
+* Tools
 
-  This section contains all settings related to autocompletion and
-  snippets. This includes search, as auto-completion in searching is
-  very important.
+  This section contains the configuration of various tools that make using emacs
+  a lot faster/useful.
 
 ** Electric pair mode
 
@@ -157,20 +157,48 @@
        (:map ivy-minibuffer-map
 	     ("C-m" . ivy-alt-done)
 	     ("C-j" . ivy-alt-done)))
+   #+END_SRC
 
+   Counsel provides alternatives to some functions that make better use of ivys
+   completion framework.
+
+   #+BEGIN_SRC emacs-lisp
      (use-package counsel
        :ensure t
        :after
        (ivy)
        :bind
-       (("M-x" . counsel-M-x)))
+       (("M-x" . counsel-M-x)
+	("C-x b" . counsel-switch-buffer)))
+   #+END_SRC
 
+   Swiper is an alternative to isearch that uses ivy to show an overview of all
+   matches. It shows all matches in the minibuffer so you can easily peruse them
+   and jump to the one that you desire.
+
+   #+BEGIN_SRC emacs-lisp
      (use-package swiper
        :ensure t
        :after
        (ivy)
        :bind
        (("C-s" . swiper)))
+   #+END_SRC
+
+** Undo-tree
+
+   Undo tree exposes the emacs undo-history as a the tree it actually is,
+   instead of hiding it like a sort-of-linear-undo.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :ensure t
+       :init
+       (global-undo-tree-mode)
+       :bind
+       (:map undo-tree-map
+	     ("C-c u" . undo-tree-visualize)
+	     ("C-x u" . undo)))
    #+END_SRC
 
 ** Snippets
@@ -193,6 +221,7 @@
        :after
        (yasnippet))
    #+END_SRC
+
 ** Which-key
 
    Which key improves discoveravilty of new emacs functions by showing what
@@ -224,6 +253,149 @@
        :bind
        (("C-;" . er/expand-region)
 	("C-:" . er/contract-region)))
+   #+END_SRC
+
+** Buffler
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package bufler
+       :ensure t
+       :demand
+       :bind
+       (("C-x C-b" . bufler)))
+   #+END_SRC
+
+** Magit
+
+   Magit is a git frontend for emacs. Everything that can be done from the command
+   line can be done from within magit.
+
+   | Keybind | Action         |
+   |---------+----------------|
+   | C-c m   | Launches magit |
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :bind
+       (("C-c m" . magit)))
+   #+END_SRC
+
+** Dired
+
+   Dired is a file-explorer built into emacs. When inside a dired buffer
+   files/directories can be marked to take bulk actions, the buffer can be made
+   editable to change filenames and much, much more.
+
+   | Keybind | Action                                                      |
+   |---------+-------------------------------------------------------------|
+   | C-c d   | Prompts for a directory to open with dired, in other window |
+
+   When inside a dired buffer, the following keybindings were added:
+
+   | Keybind | Action                                                                            |
+   |---------+-----------------------------------------------------------------------------------|
+   | tab     | Expands or contracts a subtree in the same buffer                                 |
+   | C-tab   | Cycles a subtree, that is, it expands or contracts every subtree at the same time |
+   | S-tab   | Removes a subtree. Useful when trying to go up in the directory hierarchy         |
+
+   The following keybindings are useful when in a dired buffer:
+
+   | Keybind | Action                                                                                        |
+   |---------+-----------------------------------------------------------------------------------------------|
+   | M       | Edit a files mode                                                                             |
+   | d       | Marks a file for deletion                                                                     |
+   | u       | Drops all marks put upon a file                                                               |
+   | o       | Opens a file in the other window                                                              |
+   | C       | Copies a file                                                                                 |
+   | R       | Renames a file                                                                                |
+   | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
+   | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
+   #+BEGIN_SRC emacs-lisp
+     (use-package emacs
+       :config
+       (setq dired-listing-switches "-lha --group-directories-first")
+       :bind
+       ("C-x d" . dired-other-window))
+
+     (use-package dired-subtree
+       :defer t
+       :ensure t
+       :after dired
+       :config
+       (setq dired-subtree-use-backgrounds nil)
+       :bind
+       (:map dired-mode-map
+	     ("<tab>" . dired-subtree-toggle)
+	     ("<C-tab>" . dired-subtree-cycle)
+	     ("<S-iso-lefttab>" . dired-subtree-remove)))
+   #+END_SRC
+
+** Projectile
+
+   Projectile is a package that adds features for interacting with projects.
+   This includes, but is not limited to, finding files in a project, grepping in
+   a project and opening a project directory in dired.
+
+   | Keybind | Action                              |
+   |---------+-------------------------------------|
+   | C-c p   | Launches the projectile command map |
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :demand
+       :config
+       (projectile-mode +1)
+       :bind
+       (:map projectile-mode-map
+	     ("C-c p" . projectile-command-map)))
+   #+END_SRC
+
+** Gnus
+
+   Configure gnus to use the appropiate imap and smtp servers
+
+   #+BEGIN_SRC emacs-lisp
+     (setq gnus-select-method '(nnnil ""))
+     (setq gnus-secondary-select-methods
+	   '((nntp "news.gwene.org")
+	     (nnimap "FING"
+		     (nnimap-address "imap.fing.edu.uy"))))
+     (setq send-mail-function    'smtpmail-send-it
+	   smtpmail-smtp-server  "smtp.fing.edu.uy"
+	   smtpmail-stream-type  'starttls
+	   smtpmail-smtp-service 25
+	   user-full-name        "Marco Centurion"
+	   user-mail-address     "mcenturion@fing.edu.uy"
+	   message-signature     "Marco Centurion
+     Unidad de Recursos Informáticos
+     Facultad de Ingeniería - UdelaR")
+   #+END_SRC
+
+   Set gnus as the default email client
+
+   #+BEGIN_SRC emacs-lisp
+     (setq mail-user-agent 'gnus-user-agent)
+   #+END_SRC
+
+   Configure some display options
+
+   #+BEGIN_SRC emacs-lisp
+     (setq gnus-use-full-window nil)
+     (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+     (setq gnus-topic-line-format "%i[%n %A] %v\n")
+     (setq gnus-thread-sort-functions
+           '(gnus-thread-sort-by-most-recent-date))
+   #+END_SRC
+
+   Configure gnus to fetch new email every 2 minutes
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'gnus-startup-hook
+	  '(lambda ()
+	       (gnus-demon-init)
+	       (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
    #+END_SRC
 
 * Programming Languages
@@ -386,7 +558,6 @@
      #+END_SRC
 
 
-
 *** org-mode customizations
 
     I declare an alternative keybinding to export an org-table directly to a csv
@@ -441,140 +612,3 @@
 	:after
 	(org))
     #+END_SRC
-
-* Tools
-
-  This section contains the configuration of the different tools used inside of
-  emacs.
-
-** Magit
-
-   Magit is a git frontend for emacs. Everything that can be done from the command
-   line can be done from within magit.
-
-   | Keybind | Action         |
-   |---------+----------------|
-   | C-c m   | Launches magit |
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :ensure t
-       :bind
-       (("C-c m" . magit)))
-   #+END_SRC
-
-** Dired
-
-   Dired is a file-explorer built into emacs. When inside a dired buffer
-   files/directories can be marked to take bulk actions, the buffer can be made
-   editable to change filenames and much, much more.
-
-   | Keybind | Action                                                      |
-   |---------+-------------------------------------------------------------|
-   | C-c d   | Prompts for a directory to open with dired, in other window |
-
-   When inside a dired buffer, the following keybindings were added:
-
-   | Keybind | Action                                                                            |
-   |---------+-----------------------------------------------------------------------------------|
-   | tab     | Expands or contracts a subtree in the same buffer                                 |
-   | C-tab   | Cycles a subtree, that is, it expands or contracts every subtree at the same time |
-   | S-tab   | Removes a subtree. Useful when trying to go up in the directory hierarchy         |
-
-   The following keybindings are useful when in a dired buffer:
-
-   | Keybind | Action                                                                                        |
-   |---------+-----------------------------------------------------------------------------------------------|
-   | M       | Edit a files mode                                                                             |
-   | d       | Marks a file for deletion                                                                     |
-   | u       | Drops all marks put upon a file                                                               |
-   | o       | Opens a file in the other window                                                              |
-   | C       | Copies a file                                                                                 |
-   | R       | Renames a file                                                                                |
-   | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
-   | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
-   #+BEGIN_SRC emacs-lisp
-     (use-package emacs
-       :config
-       (setq dired-listing-switches "-lha --group-directories-first")
-       :bind
-       ("C-x d" . dired-other-window))
-
-     (use-package dired-subtree
-       :defer t
-       :ensure t
-       :after dired
-       :config
-       (setq dired-subtree-use-backgrounds nil)
-       :bind
-       (:map dired-mode-map
-	     ("<tab>" . dired-subtree-toggle)
-	     ("<C-tab>" . dired-subtree-cycle)
-	     ("<S-iso-lefttab>" . dired-subtree-remove)))
-   #+END_SRC
-** Projectile
-
-   Projectile is a package that adds features for interacting with projects.
-   This includes, but is not limited to, finding files in a project, grepping in
-   a project and opening a project directory in dired.
-
-   | Keybind | Action                              |
-   |---------+-------------------------------------|
-   | C-c p   | Launches the projectile command map |
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :ensure t
-       :demand
-       :config
-       (projectile-mode +1)
-       :bind
-       (:map projectile-mode-map
-	     ("C-c p" . projectile-command-map)))
-   #+END_SRC
-
-** Gnus
-
-   Configure gnus to use the appropiate imap and smtp servers
-
-   #+BEGIN_SRC emacs-lisp
-     (setq gnus-select-method '(nnnil ""))
-     (setq gnus-secondary-select-methods
-	   '((nntp "news.gwene.org")
-	     (nnimap "FING"
-		     (nnimap-address "imap.fing.edu.uy"))))
-     (setq send-mail-function    'smtpmail-send-it
-	   smtpmail-smtp-server  "smtp.fing.edu.uy"
-	   smtpmail-stream-type  'starttls
-	   smtpmail-smtp-service 25
-	   user-full-name        "Marco Centurion"
-	   user-mail-address     "mcenturion@fing.edu.uy"
-	   message-signature     "Marco Centurion
-     Unidad de Recursos Informáticos
-     Facultad de Ingeniería - UdelaR")
-   #+END_SRC
-
-   Set gnus as the default email client
-
-   #+BEGIN_SRC emacs-lisp
-     (setq mail-user-agent 'gnus-user-agent)
-   #+END_SRC
-
-   Configure some display options
-
-   #+BEGIN_SRC emacs-lisp
-     (setq gnus-use-full-window nil)
-     (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
-     (setq gnus-topic-line-format "%i[%n %A] %v\n")
-     (setq gnus-thread-sort-functions
-           '(gnus-thread-sort-by-most-recent-date))
-   #+END_SRC
-
-   Configure gnus to fetch new email every 2 minutes
-
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'gnus-startup-hook
-	  '(lambda ()
-	       (gnus-demon-init)
-	       (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
-   #+END_SRC
