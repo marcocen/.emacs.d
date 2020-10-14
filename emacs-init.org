@@ -329,6 +329,14 @@
 	     ("<tab>" . dired-subtree-toggle)
 	     ("<C-tab>" . dired-subtree-cycle)
 	     ("<S-iso-lefttab>" . dired-subtree-remove)))
+
+     (use-package dired-narrow
+       :defer t
+       :ensure t
+       :after dired
+       :bind
+       (:map dired-mode-map
+	     ("C-c C-n" . dired-narrow)))
    #+END_SRC
 
 ** Projectile
