@@ -625,7 +625,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package rt-liberation
        :ensure nil
-       :load-path "~/.emacs.d/local/rtliber"
+       :load-path "packages/rtliber"
        :custom
        (rt-liber-rest-url "rt.fing.edu.uy")
        (rt-liber-rt-version "4.4.4")
