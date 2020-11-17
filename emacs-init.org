@@ -232,7 +232,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
        :config
-       (which-key-mode 1))
+       (which-key-mode 1)
+       (setq which-key-inhibit-regexps '("C-c r")))
    #+END_SRC
 
 ** Expand Region
@@ -623,21 +624,64 @@
 ** RT-Liberation
 
    #+BEGIN_SRC emacs-lisp
-     (use-package rt-liberation
-       :ensure nil
-       :load-path "packages/rtliber"
-       :custom
-       (rt-liber-rest-url "rt.fing.edu.uy")
-       (rt-liber-rt-version "4.4.4")
-       (rt-liber-rest-username "mcenturion")
-       (rt-liber-rest-use-auth-source-p t)
-       (rt-liber-username "mcenturion")
-       (rt-liber-base-url "https://rt.fing.edu.uy")
-       :config
-       (defun rt-liber-display-ticket (ticket-id)
-	 "Display ticket with TICKET-ID in the ticket-browser."
-	 (interactive "MTicket ID: ")
-	 (rt-liber-browse-query
-	  (rt-liber-compile-query
-		(id ticket-id)))))
+	  (use-package rt-liberation
+	    :ensure nil
+	    :load-path "packages/rtliber"
+	    :bind
+	    (("C-c r" . hydra-rt/body))
+	    :custom
+	    (rt-liber-rest-url "rt.fing.edu.uy")
+	    (rt-liber-rt-version "4.4.4")
+	    (rt-liber-rest-username "mcenturion")
+	    (rt-liber-rest-use-auth-source-p t)
+	    (rt-liber-username "mcenturion")
+	    (rt-liber-base-url "https://rt.fing.edu.uy")
+	    :config
+	    (defun rt-liber-display-ticket (ticket-id)
+	      "Display ticket with TICKET-ID in the ticket-browser."
+	      (interactive "MTicket ID: ")
+	      (rt-liber-browse-query
+	       (rt-liber-compile-query
+		(id ticket-id))))
+
+	    (defhydra hydra-rt (:color blue
+				:hint nil)
+	      "
+     My Tickets^  ^Queues^    ^Search
+     ^^^^^^-----------------------------------
+     _r_: Open     _q_: Queue  _s_: By subject
+     _t_: Today ^ ^ ^ ^
+     "
+	      ("r" mc-rt-my-tickets nil)
+	      ("t" mc-rt-today nil)
+	      ("s" mc-rt-search nil)
+	      ("q" mc-rt-queue nil))
+	    (defun mc-rt-my-tickets ()
+	      "Display my open RT tickets"
+	      (interactive)
+	      (rt-liber-browse-query
+	       (rt-liber-compile-query
+		(and (owner "mcenturion")
+		     (status "open")))))
+	    (defun mc-rt-today ()
+	      "Display my tickets that were updated today"
+	      (interactive)
+	      (rt-liber-browse-query
+	       (rt-liber-compile-query
+		(and (owner "mcenturion")
+		     (lastupdated nil
+				  "yesterday")))))
+	    (defun mc-rt-search (query)
+	      "Display tickets whose subject matches"
+	      (interactive "MSubject: ")
+	      (rt-liber-browse-query
+	       (rt-liber-compile-query
+		(subject query))))
+	    (defun mc-rt-queue (query)
+	      "Display my open RT tickets"
+	      (interactive "MQueue: ")
+	      (rt-liber-browse-query
+	       (rt-liber-compile-query
+		(and (status "open")
+		     (queue query))))))
    #+END_SRC
