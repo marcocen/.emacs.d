@@ -685,3 +685,12 @@
 		(and (status "open")
 		     (queue query))))))
    #+END_SRC
+** Eshell
+
+   The =eshell-bookmark= package adds supoort to add eshell bookmarks
+
+   #+begin_src emacs-lisp
+   (use-package eshell-bookmark
+   :config
+   (eshell-bookmark-setup))
+   #+end_src
