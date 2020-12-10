@@ -91,6 +91,21 @@
      (show-paren-mode 1)
    #+END_SRC
 
+** Rainbow delimiters
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :hook
+       (prog-mode rainbow-delimiters-mode)
+       :config
+       (setq rainbow-delimiters-outermost-only-face-count 0)
+       (setq rainbow-delimiters-max-face-count 2)
+       (set-face-foreground 'rainbow-delimiters-depth-1-face
+			    "dodger-blue")
+       (set-face-foreground 'rainbow-delimiters-depth-2-face
+			    "hot-pink"))
+   #+END_SRC
+
 ** Misc
 
    Use the graphic clipboard to copy/pase.
