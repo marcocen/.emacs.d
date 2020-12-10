@@ -687,6 +687,35 @@
    #+END_SRC
 ** Eshell
 
+   #+begin_src emacs-lisp
+     (use-package esh-mode
+       :ensure nil
+       :config
+       (defun mc/eshell-pipe-to-buffer ()
+	 (interactive)
+	 (insert (format ">>> #<%s>"
+			 (read-buffer-to-switch "Buffer: "))))
+       (defun mc/select-or-create (arg)
+	 "Commentary ARG."
+	 (if (string= arg "New eshell")
+	     (eshell t)
+	   (switch-to-buffer arg)))
+       (defun mc/eshell-switcher (&optional arg)
+	 "Commentary ARG."
+	 (interactive)
+	 (let* (
+		(buffers (cl-remove-if-not (lambda (n) (eq (buffer-local-value 'major-mode n) 'eshell-mode)) (buffer-list)) )
+		(names (mapcar (lambda (n) (buffer-name n)) buffers))
+		(num-buffers (length buffers)))
+	   (cond ((eq num-buffers 0) (eshell (or arg t)))
+		 (t (mc/select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
+       :bind
+       (("C-c t" . mc/eshell-switcher)
+	(:map eshell-mode-map
+	      ("C-c >" . mc/eshell-pipe-to-buffer))))
+   #+end_src
+
+
    The =eshell-bookmark= package adds supoort to add eshell bookmarks
 
    #+begin_src emacs-lisp
