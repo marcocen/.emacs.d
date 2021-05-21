@@ -565,3 +565,11 @@
    :config
    (eshell-bookmark-setup))
    #+end_src
+
+** VTerm
+
+   #+begin_src emacs-lisp
+     (use-package vterm
+	 :ensure t)
+   #+end_src
+
