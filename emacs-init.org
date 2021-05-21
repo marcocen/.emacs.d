@@ -250,16 +250,6 @@
 	("C-:" . er/contract-region)))
    #+END_SRC
 
-** Buffler
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package bufler
-       :ensure t
-       :demand
-       :bind
-       (("C-x C-b" . bufler)))
-   #+END_SRC
-
 ** Magit
 
    Magit is a git frontend for emacs. Everything that can be done from the command
