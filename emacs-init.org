@@ -152,54 +152,33 @@
        (lambda (c) (eq c ?<))))
    #+END_SRC
 
-** Ivy
+** Vertico
 
-   Use ivy as the autocompletion engine. In the future I'll investigate
-   icomplete and analyze if I can use that instead of Ivy, but for now I
-   need to be able to work comfortably.
-
-   The binding done in the ivy declaration is to allow me to press Return on "."
-   or ".." and have ivy move to that directory instead of opening that directory
-   with dired.
+   Vertico provides a minimalistic vertical completion UI, which is
+   based on the default completion system. By reusing the default
+   system, Vertico achieves full compatibility with built-in Emacs
+   commands and completion tables. Vertico is pretty bare-bone and
+   comes with only a minimal set of commands. The code base is small
+   (~500 lines of code without whitespace and comments). Additional
+   enhancements can be installed separately via complementary
+   packages.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package ivy
-       :ensure t
-       :demand
+     (use-package vertico
        :init
-       (ivy-mode 1)
-       :bind
-       (:map ivy-minibuffer-map
-	     ("C-m" . ivy-alt-done)
-	     ("C-j" . ivy-alt-done)))
+       (vertico-mode)
+       ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+       ;; (setq vertico-cycle t)
+     )
+
+     ;; You may prefer to use `initials' instead of `partial-completion'.
+     (use-package orderless
+       :init
+       (setq completion-styles '(orderless)
+	     completion-category-defaults nil
+	     completion-category-overrides '((file (styles . (partial-completion))))))
    #+END_SRC
-
-   Counsel provides alternatives to some functions that make better use of ivys
-   completion framework.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package counsel
-       :ensure t
-       :after
-       (ivy)
-       :bind
-       (("M-x" . counsel-M-x)
-	("C-x b" . counsel-switch-buffer)))
-   #+END_SRC
-
-   Swiper is an alternative to isearch that uses ivy to show an overview of all
-   matches. It shows all matches in the minibuffer so you can easily peruse them
-   and jump to the one that you desire.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package swiper
-       :ensure t
-       :after
-       (ivy)
-       :bind
-       (("C-s" . swiper)))
-   #+END_SRC
-
+   
 ** Undo-tree
 
    Undo tree exposes the emacs undo-history as a the tree it actually is,
