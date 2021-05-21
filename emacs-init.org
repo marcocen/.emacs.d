@@ -573,3 +573,64 @@
 	 :ensure t)
    #+end_src
 
+** Notmuch
+
+   #+begin_src emacs-lisp
+     (use-package notmuch
+       :ensure t
+       :custom
+       (notmuch-search-oldest-first nil)
+       (notmuch-show-empty-saved-searches t)
+       (notmuch-saved-searches
+	`(( :name "unread"
+		  :query "tag:inbox and tag:unread"
+		  :sort-order newest-first
+		  :key ,(kbd "u"))
+	  ( :name "inbox"
+		  :query "tag:inbox"
+		  :sort-order newest-first
+		  :key ,(kbd "i"))
+	  (:name "Flagged"
+		 :query "tag:flagged"
+		 :sort-order: newest-first
+		 :key ,(kbd "fl"))
+	  ( :name "sent"
+		  :query "folder:Sent"
+		  :sort-order newest-first)
+	  (:name "Backup"
+		 :query "tag:backup and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "b"))
+	  (:name "Cron"
+		 :query "tag:cron and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "c"))
+	  (:name "Drafts"
+		 :query "folder:Drafts"
+		 :sort-order: newest-first)
+	  (:name "Fail2Ban"
+		 :query "tag:fail2ban and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "fa"))
+	  (:name "Logwatch"
+		 :query "tag:logwatch and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "l"))
+	  (:name "Moodle"
+		 :query "tag:moodle and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "m"))
+	  (:name "Nagios"
+		 :query "tag:nagios and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "n"))
+	  (:name "Drupal"
+		 :query "tag:drupal and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "d"))
+	  (:name "SMTP"
+		 :query "tag:smtp and tag:unread"
+		 :sort-order: newest-first
+		  :key ,(kbd "s"))
+	  )))
+   #+end_src
