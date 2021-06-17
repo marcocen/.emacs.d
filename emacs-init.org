@@ -573,6 +573,10 @@
 	 :ensure t)
    #+end_src
 
+   #+begin_src emacs-lisp
+     (use-package multi-vterm
+       :ensure t)
+   #+end_src
 ** Notmuch
 
    #+begin_src emacs-lisp
