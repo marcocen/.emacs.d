@@ -96,7 +96,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
        :hook
-       (prog-mode rainbow-delimiters-mode)
+       (prog-mode . rainbow-delimiters-mode)
        :config
        (setq rainbow-delimiters-outermost-only-face-count 0)
        (setq rainbow-delimiters-max-face-count 2)
