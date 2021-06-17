@@ -288,20 +288,24 @@
 
    | Keybind | Action                                                                                        |
    |---------+-----------------------------------------------------------------------------------------------|
-   | M       | Edit a files mode                                                                             |
+   | M       | Edit a files mode (permissions)                                                               |
+   | m       | Marks a file for further operations                                                           |
    | d       | Marks a file for deletion                                                                     |
    | u       | Drops all marks put upon a file                                                               |
    | o       | Opens a file in the other window                                                              |
+   | v       | Visits a file in a readonly buffer                                                            |
    | C       | Copies a file                                                                                 |
    | R       | Renames a file                                                                                |
    | C-x C-q | Enters editable-dired mode, making file names editable. C-c C-c to confirm, C-c C-k to cancel |
    | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
+
    #+BEGIN_SRC emacs-lisp
      (use-package emacs
-       :config
-       (setq dired-listing-switches "-lha --group-directories-first")
        :bind
-       ("C-x d" . dired-other-window))
+       ("C-x d" . dired-other-window)
+       :custom
+       (dired-listing-switches "-lha --group-directories-first")
+       (wdired-allow-to-change-permissions t))
 
      (use-package dired-subtree
        :defer t
