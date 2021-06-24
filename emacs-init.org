@@ -374,6 +374,20 @@
 	       (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
    #+END_SRC
 
+** Multiple Cursors
+
+   Multiple cursors allows one to edit multiple parts of a buffer at the same
+   time in a manner similar to rectangles but with the added benefit of allowing
+   movements.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package multiple-cursors
+       :bind
+       ("C-c s s" . mc/edit-lines)
+       ("C-c s n" . mc/mark-next-like-this)
+       ("C-c s p" . mc/mark-previous-like-this))
+   #+end_src
+
 * Programming Languages
 
   This section contains all settings directly related with a specific programming
