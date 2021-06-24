@@ -600,6 +600,11 @@
    #+begin_src emacs-lisp
      (use-package notmuch
        :ensure t
+       :bind
+       ((:map notmuch-search-mode-map
+	      ("RET" . notmuch-tree-from-search-thread)
+	      ("M-RET" . notmuch-search-show-thread)))
+
        :custom
        (notmuch-search-oldest-first nil)
        (notmuch-show-empty-saved-searches t)
