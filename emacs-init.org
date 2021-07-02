@@ -380,7 +380,7 @@
    time in a manner similar to rectangles but with the added benefit of allowing
    movements.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package multiple-cursors
        :bind
        ("C-c s s" . mc/edit-lines)
