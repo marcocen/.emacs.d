@@ -250,7 +250,7 @@
 	("C-:" . er/contract-region)))
    #+END_SRC
 
-** Magit
+** Version Controlling
 
    Magit is a git frontend for emacs. Everything that can be done from the command
    line can be done from within magit.
@@ -265,6 +265,42 @@
        :bind
        (("C-c m" . magit)))
    #+END_SRC
+
+   The next function allow me to commit and push the changes to a file
+
+   #+begin_src emacs-lisp
+     (use-package emacs
+       :ensure nil
+       :config
+       (defun vc-commit-push (comment)
+	 (interactive "sCommit Message: ")
+	 (let* ((vc-fileset (vc-deduce-fileset nil t 'state-model-only-files))
+		(backend (car vc-fileset))
+		(files (nth 1 vc-fileset))
+		(ready-for-commit files)
+		(model (nth 4 vc-fileset)))
+	   (save-excursion
+	     (dolist (file files)
+	       (let ((visited (get-file-buffer file)))
+		 ;; For files with locking, if the file does not contain
+		 ;; any changes, just let go of the lock, i.e. revert.
+		 (when (and (not (eq model 'implicit))
+			    (eq state 'up-to-date)
+			    ;; If buffer is modified, that means the user just
+			    ;; said no to saving it; in that case, don't revert,
+			    ;; because the user might intend to save after
+			    ;; finishing the log entry and committing.
+			    (not (and visited (buffer-modified-p))))
+		   (vc-revert-file file)
+		   (setq ready-for-commit (delete file ready-for-commit))))))
+	   ;; Remaining files need to be committed
+	   (if (not ready-for-commit)
+	       (message "No files remain to be committed")
+	     (vc-checkin ready-for-commit backend comment)))
+	 (vc-push))
+       :bind
+       (("C-x v p" . vc-commit-push)))
+   #+end_src
 
 ** Dired
 
