@@ -462,7 +462,7 @@
        :custom
        (major-mode 'org-mode))
    #+END_SRC
-
+   
 *** org-mode customizations
 
     I declare an alternative keybinding to export an org-table directly to a csv
@@ -624,7 +624,10 @@
 
    #+begin_src emacs-lisp
      (use-package vterm
-	 :ensure t)
+	 :ensure t
+	 :bind
+	 (("C-c t" . multi-vterm-next)
+	  ("C-c T" . multi-vterm)))
    #+end_src
 
    #+begin_src emacs-lisp
