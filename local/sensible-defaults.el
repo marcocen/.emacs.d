@@ -70,11 +70,6 @@ mode."
   (add-hook 'after-save-hook
             'executable-make-buffer-file-executable-if-script-p))
 
-(defun sensible-defaults/single-space-after-periods ()
-  "Don't assume that sentences should have two spaces after
-periods. This ain't a typewriter."
-  (setq sentence-end-double-space nil))
-
 (defun sensible-defaults/offer-to-create-parent-directories-on-save ()
   "When saving a file in a directory that doesn't exist, offer
 to (recursively) create the file's parent directories."
