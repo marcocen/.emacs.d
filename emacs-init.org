@@ -542,6 +542,15 @@
 	:after
 	(org))
     #+END_SRC
+*** org-pandoc-import
+    #+begin_src emacs-lisp
+      (use-package org-pandoc-import
+	:straight (:host github
+		   :repo "tecosaur/org-pandoc-import"
+		   :files ("*.el" "filters" "preprocessors")))
+    #+end_src
+
+    
 ** RT-Liberation
 
    #+BEGIN_SRC emacs-lisp
