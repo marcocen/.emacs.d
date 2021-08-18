@@ -15,6 +15,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package emacs
+:ensure nil
        :config
        (defun mcenturion/delete-emacs-init ()
 	 (interactive)
@@ -68,10 +69,13 @@
    so far.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package modus-operandi-theme
-       :ensure t
-       :config
-       (load-theme 'modus-operandi t))
+	(use-package modus-operandi-theme
+	  :straight (modus-operandi-theme :type git
+					  :host github
+					  :repo "protesilaos/modus-themes")
+	  :ensure t
+	  :config
+	  (load-theme 'modus-operandi t))
    #+END_SRC
 
 ** Element hiding
@@ -95,6 +99,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
+    :straight t
        :hook
        (prog-mode . rainbow-delimiters-mode)
        :config
@@ -113,6 +118,7 @@
    #+BEGIN_SRC emacs-lisp
 
      (use-package xclip
+    :straight t
        :ensure t
        :config
        (xclip-mode 1))
@@ -122,6 +128,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package linum
+    :straight t
        :hook
        ((prog-mode . linum-mode)
        (text-mode . linum-mode)))
@@ -146,6 +153,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package emacs
+:ensure nil
        :config
        (electric-pair-mode 1)
        (add-function :before-until electric-pair-inhibit-predicate
@@ -164,19 +172,21 @@
    packages.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package vertico
-       :init
-       (vertico-mode)
-       ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-       ;; (setq vertico-cycle t)
-     )
+      (use-package vertico
+     :straight t
+	:init
+	(vertico-mode)
+	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+	;; (setq vertico-cycle t)
+      )
 
-     ;; You may prefer to use `initials' instead of `partial-completion'.
-     (use-package orderless
-       :init
-       (setq completion-styles '(orderless)
-	     completion-category-defaults nil
-	     completion-category-overrides '((file (styles . (partial-completion))))))
+      ;; You may prefer to use `initials' instead of `partial-completion'.
+      (use-package orderless
+     :straight t
+	:init
+	(setq completion-styles '(orderless)
+	      completion-category-defaults nil
+	      completion-category-overrides '((file (styles . (partial-completion))))))
    #+END_SRC
    
 ** Undo-tree
@@ -186,6 +196,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
+    :straight t
        :ensure t
        :init
        (global-undo-tree-mode)
@@ -205,15 +216,17 @@
    different repositories, for ease of sharing.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :ensure t
-       :init
-       (yas-global-mode))
+      (use-package yasnippet
+     :straight t
+	:ensure t
+	:init
+	(yas-global-mode))
 
-     (use-package yasnippet-snippets
-       :ensure t
-       :after
-       (yasnippet))
+      (use-package yasnippet-snippets
+     :straight t
+	:ensure t
+	:after
+	(yasnippet))
    #+END_SRC
 
 ** Which-key
@@ -225,6 +238,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
+    :straight t
        :config
        (which-key-mode 1)
        (setq which-key-inhibit-regexps '("C-c r")))
@@ -245,6 +259,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package expand-region
+    :straight t
        :bind
        (("C-;" . er/expand-region)
 	("C-:" . er/contract-region)))
@@ -261,6 +276,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package magit
+    :straight t
        :ensure t
        :bind
        (("C-c m" . magit)))
@@ -336,32 +352,35 @@
    | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
 
    #+BEGIN_SRC emacs-lisp
-     (use-package emacs
-       :bind
-       ("C-x d" . dired-other-window)
-       :custom
-       (dired-listing-switches "-lha --group-directories-first")
-       (wdired-allow-to-change-permissions t))
+	  (use-package emacs
+     :ensure nil
+	    :bind
+	    ("C-x d" . dired-other-window)
+	    :custom
+	    (dired-listing-switches "-lha --group-directories-first")
+	    (wdired-allow-to-change-permissions t))
 
-     (use-package dired-subtree
-       :defer t
-       :ensure t
-       :after dired
-       :config
-       (setq dired-subtree-use-backgrounds nil)
-       :bind
-       (:map dired-mode-map
-	     ("<tab>" . dired-subtree-toggle)
-	     ("<C-tab>" . dired-subtree-cycle)
-	     ("<S-iso-lefttab>" . dired-subtree-remove)))
+	  (use-package dired-subtree
+	 :straight t
+	    :defer t
+	    :ensure t
+	    :after dired
+	    :config
+	    (setq dired-subtree-use-backgrounds nil)
+	    :bind
+	    (:map dired-mode-map
+		  ("<tab>" . dired-subtree-toggle)
+		  ("<C-tab>" . dired-subtree-cycle)
+		  ("<S-iso-lefttab>" . dired-subtree-remove)))
 
-     (use-package dired-narrow
-       :defer t
-       :ensure t
-       :after dired
-       :bind
-       (:map dired-mode-map
-	     ("C-c C-n" . dired-narrow)))
+	  (use-package dired-narrow
+         :straight t
+	    :defer t
+	    :ensure t
+	    :after dired
+	    :bind
+	    (:map dired-mode-map
+		  ("C-c C-n" . dired-narrow)))
    #+END_SRC
 
 ** Gnus
@@ -418,6 +437,7 @@
 
    #+begin_src emacs-lisp
      (use-package multiple-cursors
+    :straight t
        :bind
        ("C-c s s" . mc/edit-lines)
        ("C-c s n" . mc/mark-next-like-this)
@@ -449,6 +469,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package puppet-mode
+    :straight t
        :ensure t)
    #+END_SRC
 
@@ -459,6 +480,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package org
+    :straight t
        :custom
        (major-mode 'org-mode))
    #+END_SRC
@@ -474,6 +496,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org
+    :straight t
 	:ensure t
 	:config
 	(defun mcv/orgtbl-to-csv (table params)
@@ -495,6 +518,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org
+    :straight t
 	:ensure t
 	:custom
 	(org-export-options-alist
@@ -511,6 +535,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org-bullets
+    :straight t
 	:ensure t
 	:config
 	(add-hook 'org-mode-hook 'org-bullets-mode)
@@ -615,15 +640,17 @@
    The =eshell-bookmark= package adds supoort to add eshell bookmarks
 
    #+begin_src emacs-lisp
-   (use-package eshell-bookmark
-   :config
-   (eshell-bookmark-setup))
+     (use-package eshell-bookmark
+    :straight t
+     :config
+     (eshell-bookmark-setup))
    #+end_src
 
 ** VTerm
 
    #+begin_src emacs-lisp
      (use-package vterm
+    :straight t
 	 :ensure t
 	 :bind
 	 (("C-c t" . multi-vterm-next)
@@ -632,12 +659,14 @@
 
    #+begin_src emacs-lisp
      (use-package multi-vterm
+    :straight t
        :ensure t)
    #+end_src
 ** Notmuch
 
    #+begin_src emacs-lisp
      (use-package notmuch
+    :straight t
        :ensure t
        :bind
        ((:map notmuch-search-mode-map
