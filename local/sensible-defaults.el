@@ -155,7 +155,6 @@ insert the text where point is, not where the mouse cursor is."
   (sensible-defaults/treat-camelcase-as-separate-words)
   (sensible-defaults/automatically-follow-symlinks)
   (sensible-defaults/make-scripts-executable)
-  (sensible-defaults/single-space-after-periods)
   (sensible-defaults/offer-to-create-parent-directories-on-save)
   (sensible-defaults/apply-changes-to-highlighted-region)
   (sensible-defaults/overwrite-selected-text)
