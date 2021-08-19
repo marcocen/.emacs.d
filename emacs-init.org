@@ -15,7 +15,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package emacs
-:ensure nil
+       :ensure nil
        :config
        (defun mcenturion/delete-emacs-init ()
 	 (interactive)
@@ -69,13 +69,13 @@
    so far.
 
    #+BEGIN_SRC emacs-lisp
-	(use-package modus-operandi-theme
-	  :straight (modus-operandi-theme :type git
-					  :host github
-					  :repo "protesilaos/modus-themes")
-	  :ensure t
-	  :config
-	  (load-theme 'modus-operandi t))
+     (use-package modus-operandi-theme
+       :straight (modus-operandi-theme :type git
+				       :host github
+				       :repo "protesilaos/modus-themes")
+       :ensure t
+       :config
+       (load-theme 'modus-operandi t))
    #+END_SRC
 
 ** Element hiding
@@ -99,7 +99,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
-    :straight t
+       :straight t
+       :ensure t
        :hook
        (prog-mode . rainbow-delimiters-mode)
        :config
@@ -118,7 +119,7 @@
    #+BEGIN_SRC emacs-lisp
 
      (use-package xclip
-    :straight t
+       :straight t
        :ensure t
        :config
        (xclip-mode 1))
@@ -128,10 +129,11 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package linum
-    :straight t
+       :straight t
+       :ensure t
        :hook
        ((prog-mode . linum-mode)
-       (text-mode . linum-mode)))
+	(text-mode . linum-mode)))
    #+END_SRC
 
 * Tools
@@ -153,11 +155,11 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package emacs
-:ensure nil
+       :ensure nil
        :config
        (electric-pair-mode 1)
        (add-function :before-until electric-pair-inhibit-predicate
-       (lambda (c) (eq c ?<))))
+		     (lambda (c) (eq c ?<))))
    #+END_SRC
 
 ** Vertico
@@ -172,21 +174,20 @@
    packages.
 
    #+BEGIN_SRC emacs-lisp
-      (use-package vertico
-     :straight t
-	:init
-	(vertico-mode)
-	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-	;; (setq vertico-cycle t)
-      )
+     (use-package vertico
+       :straight t
+       :ensure t
+       :init
+       (vertico-mode))
 
-      ;; You may prefer to use `initials' instead of `partial-completion'.
-      (use-package orderless
-     :straight t
-	:init
-	(setq completion-styles '(orderless)
-	      completion-category-defaults nil
-	      completion-category-overrides '((file (styles . (partial-completion))))))
+     ;; You may prefer to use `initials' instead of `partial-completion'.
+     (use-package orderless
+       :straight t
+       :ensure t
+       :init
+       (setq completion-styles '(orderless)
+	     completion-category-defaults nil
+	     completion-category-overrides '((file (styles . (partial-completion))))))
    #+END_SRC
    
 ** Undo-tree
@@ -196,7 +197,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
-    :straight t
+       :straight t
        :ensure t
        :init
        (global-undo-tree-mode)
@@ -216,17 +217,17 @@
    different repositories, for ease of sharing.
 
    #+BEGIN_SRC emacs-lisp
-      (use-package yasnippet
-     :straight t
-	:ensure t
-	:init
-	(yas-global-mode))
+     (use-package yasnippet
+       :straight t
+       :ensure t
+       :init
+       (yas-global-mode))
 
-      (use-package yasnippet-snippets
-     :straight t
-	:ensure t
-	:after
-	(yasnippet))
+     (use-package yasnippet-snippets
+       :straight t
+       :ensure t
+       :after
+       (yasnippet))
    #+END_SRC
 
 ** Which-key
@@ -238,7 +239,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
-    :straight t
+       :straight t
+       :ensure t
        :config
        (which-key-mode 1)
        (setq which-key-inhibit-regexps '("C-c r")))
@@ -259,7 +261,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package expand-region
-    :straight t
+       :straight t
+       :ensure t
        :bind
        (("C-;" . er/expand-region)
 	("C-:" . er/contract-region)))
@@ -276,7 +279,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-    :straight t
+       :straight t
        :ensure t
        :bind
        (("C-c m" . magit)))
@@ -352,35 +355,35 @@
    | C-(     | Hides details like mode, owner, etc, leaving only the filenames                               |
 
    #+BEGIN_SRC emacs-lisp
-	  (use-package emacs
-     :ensure nil
-	    :bind
-	    ("C-x d" . dired-other-window)
-	    :custom
-	    (dired-listing-switches "-lha --group-directories-first")
-	    (wdired-allow-to-change-permissions t))
+     (use-package emacs
+       :ensure nil
+       :bind
+       ("C-x d" . dired-other-window)
+       :custom
+       (dired-listing-switches "-lha --group-directories-first")
+       (wdired-allow-to-change-permissions t))
 
-	  (use-package dired-subtree
-	 :straight t
-	    :defer t
-	    :ensure t
-	    :after dired
-	    :config
-	    (setq dired-subtree-use-backgrounds nil)
-	    :bind
-	    (:map dired-mode-map
-		  ("<tab>" . dired-subtree-toggle)
-		  ("<C-tab>" . dired-subtree-cycle)
-		  ("<S-iso-lefttab>" . dired-subtree-remove)))
+     (use-package dired-subtree
+       :straight t
+       :defer t
+       :ensure t
+       :after dired
+       :config
+       (setq dired-subtree-use-backgrounds nil)
+       :bind
+       (:map dired-mode-map
+	     ("<tab>" . dired-subtree-toggle)
+	     ("<C-tab>" . dired-subtree-cycle)
+	     ("<S-iso-lefttab>" . dired-subtree-remove)))
 
-	  (use-package dired-narrow
-         :straight t
-	    :defer t
-	    :ensure t
-	    :after dired
-	    :bind
-	    (:map dired-mode-map
-		  ("C-c C-n" . dired-narrow)))
+     (use-package dired-narrow
+       :straight t
+       :defer t
+       :ensure t
+       :after dired
+       :bind
+       (:map dired-mode-map
+	     ("C-c C-n" . dired-narrow)))
    #+END_SRC
 
 ** Gnus
@@ -417,16 +420,16 @@
      (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
      (setq gnus-topic-line-format "%i[%n %A] %v\n")
      (setq gnus-thread-sort-functions
-           '(gnus-thread-sort-by-most-recent-date))
+	   '(gnus-thread-sort-by-most-recent-date))
    #+END_SRC
 
    Configure gnus to fetch new email every 2 minutes
 
    #+BEGIN_SRC emacs-lisp
      (add-hook 'gnus-startup-hook
-	  '(lambda ()
-	       (gnus-demon-init)
-	       (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
+	       '(lambda ()
+		  (gnus-demon-init)
+		  (gnus-demon-add-handler 'gnus-group-get-new-news 2 t)))
    #+END_SRC
 
 ** Multiple Cursors
@@ -437,7 +440,8 @@
 
    #+begin_src emacs-lisp
      (use-package multiple-cursors
-    :straight t
+       :straight t
+       :ensure t
        :bind
        ("C-c s s" . mc/edit-lines)
        ("C-c s n" . mc/mark-next-like-this)
@@ -469,7 +473,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package puppet-mode
-    :straight t
+       :straight t
        :ensure t)
    #+END_SRC
 
@@ -480,7 +484,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package org
-    :straight t
+       :straight t
+       :ensure t
        :custom
        (major-mode 'org-mode))
    #+END_SRC
@@ -496,7 +501,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org
-    :straight t
+	:straight t
 	:ensure t
 	:config
 	(defun mcv/orgtbl-to-csv (table params)
@@ -518,7 +523,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org
-    :straight t
+	:straight t
 	:ensure t
 	:custom
 	(org-export-options-alist
@@ -535,7 +540,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package org-bullets
-    :straight t
+	:straight t
 	:ensure t
 	:config
 	(add-hook 'org-mode-hook 'org-bullets-mode)
@@ -546,74 +551,75 @@
     #+begin_src emacs-lisp
       (use-package org-pandoc-import
 	:straight (:host github
-		   :repo "tecosaur/org-pandoc-import"
-		   :files ("*.el" "filters" "preprocessors")))
+			 :repo "tecosaur/org-pandoc-import"
+			 :files ("*.el" "filters" "preprocessors"))
+	:ensure t)
     #+end_src
 
     
 ** RT-Liberation
 
    #+BEGIN_SRC emacs-lisp
-	  (use-package rt-liberation
-	    :ensure nil
-	    :load-path "packages/rtliber"
-	    :bind
-	    (("C-c r" . hydra-rt/body))
-	    :custom
-	    (rt-liber-rest-url "rt.fing.edu.uy")
-	    (rt-liber-rt-version "4.4.4")
-	    (rt-liber-rest-username "mcenturion")
-	    (rt-liber-rest-use-auth-source-p t)
-	    (rt-liber-username "mcenturion")
-	    (rt-liber-base-url "https://rt.fing.edu.uy")
-	    :config
-	    (defun rt-liber-display-ticket (ticket-id)
-	      "Display ticket with TICKET-ID in the ticket-browser."
-	      (interactive "MTicket ID: ")
-	      (rt-liber-browse-query
-	       (rt-liber-compile-query
-		(id ticket-id))))
+     (use-package rt-liberation
+       :ensure nil
+       :load-path "packages/rtliber"
+       :bind
+       (("C-c r" . hydra-rt/body))
+       :custom
+       (rt-liber-rest-url "rt.fing.edu.uy")
+       (rt-liber-rt-version "4.4.4")
+       (rt-liber-rest-username "mcenturion")
+       (rt-liber-rest-use-auth-source-p t)
+       (rt-liber-username "mcenturion")
+       (rt-liber-base-url "https://rt.fing.edu.uy")
+       :config
+       (defun rt-liber-display-ticket (ticket-id)
+	 "Display ticket with TICKET-ID in the ticket-browser."
+	 (interactive "MTicket ID: ")
+	 (rt-liber-browse-query
+	  (rt-liber-compile-query
+	   (id ticket-id))))
 
-	    (defhydra hydra-rt (:color blue
-				:hint nil)
-	      "
+       (defhydra hydra-rt (:color blue
+				  :hint nil)
+	 "
      My Tickets^  ^Queues^    ^Search
      ^^^^^^-----------------------------------
      _r_: Open     _q_: Queue  _s_: By subject
      _t_: Today ^ ^ ^ ^
      "
-	      ("r" mc-rt-my-tickets nil)
-	      ("t" mc-rt-today nil)
-	      ("s" mc-rt-search nil)
-	      ("q" mc-rt-queue nil))
-	    (defun mc-rt-my-tickets ()
-	      "Display my open RT tickets"
-	      (interactive)
-	      (rt-liber-browse-query
-	       (rt-liber-compile-query
-		(and (owner "mcenturion")
-		     (status "open")))))
-	    (defun mc-rt-today ()
-	      "Display my tickets that were updated today"
-	      (interactive)
-	      (rt-liber-browse-query
-	       (rt-liber-compile-query
-		(and (owner "mcenturion")
-		     (lastupdated nil
-				  "yesterday")))))
-	    (defun mc-rt-search (query)
-	      "Display tickets whose subject matches"
-	      (interactive "MSubject: ")
-	      (rt-liber-browse-query
-	       (rt-liber-compile-query
-		(subject query))))
-	    (defun mc-rt-queue (query)
-	      "Display my open RT tickets"
-	      (interactive "MQueue: ")
-	      (rt-liber-browse-query
-	       (rt-liber-compile-query
-		(and (status "open")
-		     (queue query))))))
+	 ("r" mc-rt-my-tickets nil)
+	 ("t" mc-rt-today nil)
+	 ("s" mc-rt-search nil)
+	 ("q" mc-rt-queue nil))
+       (defun mc-rt-my-tickets ()
+	 "Display my open RT tickets"
+	 (interactive)
+	 (rt-liber-browse-query
+	  (rt-liber-compile-query
+	   (and (owner "mcenturion")
+		(status "open")))))
+       (defun mc-rt-today ()
+	 "Display my tickets that were updated today"
+	 (interactive)
+	 (rt-liber-browse-query
+	  (rt-liber-compile-query
+	   (and (owner "mcenturion")
+		(lastupdated nil
+			     "yesterday")))))
+       (defun mc-rt-search (query)
+	 "Display tickets whose subject matches"
+	 (interactive "MSubject: ")
+	 (rt-liber-browse-query
+	  (rt-liber-compile-query
+	   (subject query))))
+       (defun mc-rt-queue (query)
+	 "Display my open RT tickets"
+	 (interactive "MQueue: ")
+	 (rt-liber-browse-query
+	  (rt-liber-compile-query
+	   (and (status "open")
+		(queue query))))))
    #+END_SRC
 ** Eshell
 
@@ -650,32 +656,33 @@
 
    #+begin_src emacs-lisp
      (use-package eshell-bookmark
-    :straight t
-     :config
-     (eshell-bookmark-setup))
+       :straight t
+       :ensure t
+       :config
+       (eshell-bookmark-setup))
    #+end_src
 
 ** VTerm
 
    #+begin_src emacs-lisp
      (use-package vterm
-    :straight t
-	 :ensure t
-	 :bind
-	 (("C-c t" . multi-vterm-next)
-	  ("C-c T" . multi-vterm)))
+       :straight t
+       :ensure t
+       :bind
+       (("C-c t" . multi-vterm-next)
+	("C-c T" . multi-vterm)))
    #+end_src
 
    #+begin_src emacs-lisp
      (use-package multi-vterm
-    :straight t
+       :straight t
        :ensure t)
    #+end_src
 ** Notmuch
 
    #+begin_src emacs-lisp
      (use-package notmuch
-    :straight t
+       :straight t
        :ensure t
        :bind
        ((:map notmuch-search-mode-map
@@ -687,20 +694,20 @@
        (notmuch-show-empty-saved-searches t)
        (notmuch-saved-searches
 	`(( :name "unread"
-		  :query "tag:inbox and tag:unread"
-		  :sort-order newest-first
-		  :key ,(kbd "u"))
+	    :query "tag:inbox and tag:unread"
+	    :sort-order newest-first
+	    :key ,(kbd "u"))
 	  ( :name "inbox"
-		  :query "tag:inbox"
-		  :sort-order newest-first
-		  :key ,(kbd "i"))
+	    :query "tag:inbox"
+	    :sort-order newest-first
+	    :key ,(kbd "i"))
 	  (:name "Flagged"
 		 :query "tag:flagged"
 		 :sort-order: newest-first
 		 :key ,(kbd "fl"))
 	  ( :name "sent"
-		  :query "folder:Sent"
-		  :sort-order newest-first)
+	    :query "folder:Sent"
+	    :sort-order newest-first)
 	  (:name "Backup"
 		 :query "tag:backup and tag:unread"
 		 :sort-order: newest-first
@@ -735,6 +742,6 @@
 	  (:name "SMTP"
 		 :query "tag:smtp and tag:unread"
 		 :sort-order: newest-first
-		  :key ,(kbd "s"))
+		 :key ,(kbd "s"))
 	  )))
    #+end_src
