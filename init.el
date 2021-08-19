@@ -21,9 +21,9 @@
  "jwiegley/use-package"))
 
 (add-to-list 'load-path "~/.emacs.d/local")
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+
 (use-package auto-compile
+  :straight t
   :config (auto-compile-on-load-mode))
 (setq load-prefer-newer t)
 
