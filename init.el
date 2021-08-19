@@ -16,8 +16,9 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-(straight-use-package 'use-package)
 
+(straight-use-package '(use-package :type git :host github :repo
+ "jwiegley/use-package"))
 
 (add-to-list 'load-path "~/.emacs.d/local")
 (require 'use-package-ensure)
