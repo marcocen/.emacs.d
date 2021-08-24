@@ -456,6 +456,19 @@
        :ensure t)
    #+end_src
 
+** WS-butler
+
+   WS-butler is a minor mode that aims to trim whitespace from the end of lines
+   in an unobtrusive way.  It does this without making the user explicitly aware
+   of the deletion taking place.
+
+   #+begin_src emacs-lisp
+     (use-package ws-butler
+       :straight t
+       :ensure t
+       :hook (prog-mode . ws-butler-mode))
+   #+end_src
+
 * Programming Languages
 
   This section contains all settings directly related with a specific programming
