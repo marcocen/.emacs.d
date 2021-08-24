@@ -448,6 +448,14 @@
        ("C-c s p" . mc/mark-previous-like-this))
    #+end_src
 
+** Hydra
+
+   #+begin_src emacs-lisp
+     (use-package hydra
+       :straight t
+       :ensure t)
+   #+end_src
+
 * Programming Languages
 
   This section contains all settings directly related with a specific programming
@@ -556,13 +564,12 @@
 	:ensure t)
     #+end_src
 
-    
 ** RT-Liberation
 
    #+BEGIN_SRC emacs-lisp
      (use-package rt-liberation
-       :ensure nil
-       :load-path "packages/rtliber"
+       :straight (:host github :repo "marcocen/rtliber")
+       :ensure t
        :bind
        (("C-c r" . hydra-rt/body))
        :custom
@@ -572,6 +579,11 @@
        (rt-liber-rest-use-auth-source-p t)
        (rt-liber-username "mcenturion")
        (rt-liber-base-url "https://rt.fing.edu.uy")
+       (rt-liber-browser-default-sorting-function
+	'mc-rt-sort-by-last-updated)
+       (rt-liber-gnus-comment-address "staff-comment@fing.edu.uy")
+       (rt-liber-gnus-address "staff@fing.edu.uy")
+       (rt-liber-gnus-subject-name "rt.fing.edu.uy")
        :config
        (defun rt-liber-display-ticket (ticket-id)
 	 "Display ticket with TICKET-ID in the ticket-browser."
@@ -619,7 +631,16 @@
 	 (rt-liber-browse-query
 	  (rt-liber-compile-query
 	   (and (status "open")
-		(queue query))))))
+		(queue query)))))
+       (defun mc-rt-sort-by-last-updated (ticket-list)
+	 "Sort TICKET-LIST by the time of the last update"
+	 (reverse
+	  (rt-liber-sort-ticket-list
+	  ticket-list
+	  (lambda (a b)
+	    (rt-liber-time-lessthan-p
+	     a b "LastUpdated")))))
+       (require 'rt-liberation-gnus))
    #+END_SRC
 ** Eshell
 
