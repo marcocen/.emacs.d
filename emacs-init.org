@@ -777,5 +777,8 @@
 		 :query "tag:smtp and tag:unread"
 		 :sort-order: newest-first
 		 :key ,(kbd "s"))
-	  )))
+	  (:name "Emacs"
+		 :query "tag:emacs and tag:unread"
+		 :sort-order: newest-first
+		 :key ,(kbd "e")))))
    #+end_src
