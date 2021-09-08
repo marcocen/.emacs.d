@@ -17,6 +17,9 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 (straight-use-package '(use-package :type git :host github :repo
  "jwiegley/use-package"))
 
