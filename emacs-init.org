@@ -474,7 +474,6 @@
 
    #+begin_src emacs-lisp
      (use-package perspective
-       :straight t
        :ensure t)
    #+end_src
 
