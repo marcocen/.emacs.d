@@ -474,7 +474,11 @@
 
    #+begin_src emacs-lisp
      (use-package perspective
-       :ensure t)
+       :ensure t
+       :bind
+       ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
+       :config
+       (persp-mode))
    #+end_src
 
    
