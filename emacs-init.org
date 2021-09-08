@@ -470,6 +470,15 @@
        :hook (prog-mode . ws-butler-mode))
    #+end_src
 
+** Perspective
+
+   #+begin_src emacs-lisp
+     (use-package perspective
+       :straight t
+       :ensure t)
+   #+end_src
+
+   
 * Programming Languages
 
   This section contains all settings directly related with a specific programming
