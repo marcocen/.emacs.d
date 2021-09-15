@@ -585,19 +585,17 @@
        :ensure t
        :bind
        (("C-c r" . hydra-rt/body))
-       :custom
-       (rt-liber-rest-url "rt.fing.edu.uy")
-       (rt-liber-rt-version "4.4.4")
-       (rt-liber-rest-username "mcenturion")
-       (rt-liber-rest-use-auth-source-p t)
-       (rt-liber-username "mcenturion")
-       (rt-liber-base-url "https://rt.fing.edu.uy")
-       (rt-liber-browser-default-sorting-function
-	'mc-rt-sort-by-last-updated)
-       (rt-liber-gnus-comment-address "staff-comment@fing.edu.uy")
-       (rt-liber-gnus-address "staff@fing.edu.uy")
-       (rt-liber-gnus-subject-name "rt.fing.edu.uy")
        :config
+       (setq rt-liber-rest-url "rt.fing.edu.uy")
+       (setq rt-liber-rt-version "4.4.4")
+       (setq rt-liber-rest-username "mcenturion")
+       (setq rt-liber-rest-use-auth-source-p t)
+       (setq rt-liber-username "mcenturion")
+       (setq rt-liber-base-url "https://rt.fing.edu.uy/")
+       (setq rt-liber-mail-comment-address "staff-comment@fing.edu.uy")
+       (setq rt-liber-mail-address "staff@fing.edu.uy")
+       (setq rt-liber-mail-subject-name "rt.fing.edu.uy")
+       (setq rt-liber-browser-default-sorting-function 'mc-rt-sort-by-last-updated)
        (defun rt-liber-display-ticket (ticket-id)
 	 "Display ticket with TICKET-ID in the ticket-browser."
 	 (interactive "MTicket ID: ")
@@ -653,7 +651,7 @@
 	  (lambda (a b)
 	    (rt-liber-time-lessthan-p
 	     a b "LastUpdated")))))
-       (require 'rt-liberation-gnus))
+       (require 'rt-liberation-mail))
    #+END_SRC
 ** Eshell
 
