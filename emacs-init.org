@@ -583,8 +583,6 @@
      (use-package rt-liberation
        :straight (:host github :repo "marcocen/rtliber")
        :ensure t
-       :bind
-       (("C-c r" . hydra-rt/body))
        :config
        (setq rt-liber-rest-url "rt.fing.edu.uy")
        (setq rt-liber-rt-version "4.4.4")
@@ -602,47 +600,6 @@
 	 (rt-liber-browse-query
 	  (rt-liber-compile-query
 	   (id ticket-id))))
-
-       (defhydra hydra-rt (:color blue
-				  :hint nil)
-	 "
-     My Tickets^  ^Queues^    ^Search
-     ^^^^^^-----------------------------------
-     _r_: Open     _q_: Queue  _s_: By subject
-     _t_: Today ^ ^ ^ ^
-     "
-	 ("r" mc-rt-my-tickets nil)
-	 ("t" mc-rt-today nil)
-	 ("s" mc-rt-search nil)
-	 ("q" mc-rt-queue nil))
-       (defun mc-rt-my-tickets ()
-	 "Display my open RT tickets"
-	 (interactive)
-	 (rt-liber-browse-query
-	  (rt-liber-compile-query
-	   (and (owner "mcenturion")
-		(status "open")))))
-       (defun mc-rt-today ()
-	 "Display my tickets that were updated today"
-	 (interactive)
-	 (rt-liber-browse-query
-	  (rt-liber-compile-query
-	   (and (owner "mcenturion")
-		(lastupdated nil
-			     "yesterday")))))
-       (defun mc-rt-search (query)
-	 "Display tickets whose subject matches"
-	 (interactive "MSubject: ")
-	 (rt-liber-browse-query
-	  (rt-liber-compile-query
-	   (subject query))))
-       (defun mc-rt-queue (query)
-	 "Display my open RT tickets"
-	 (interactive "MQueue: ")
-	 (rt-liber-browse-query
-	  (rt-liber-compile-query
-	   (and (status "open")
-		(queue query)))))
        (defun mc-rt-sort-by-last-updated (ticket-list)
 	 "Sort TICKET-LIST by the time of the last update"
 	 (reverse
@@ -653,6 +610,27 @@
 	     a b "LastUpdated")))))
        (require 'rt-liberation-mail))
    #+END_SRC
+
+   #+begin_src emacs-lisp
+     (use-package rt-dash
+       :straight (:host github
+			:repo "marcocen/rt-dash"
+			:files ("*.el"))
+       :ensure t
+       :custom
+       (rt-dash-saved-queries
+	'((:name "Mis pedidos"
+		 :query "( Status = 'open' OR Status = 'new' ) AND Owner = 'mcenturion'"
+		 :key "u")
+	  (:name "Pedidos actualizados hoy"
+		 :query "( Status = 'open' OR Status = 'new' ) AND Owner = 'mcenturion' AND LastUpdated > 'yesterday'"
+		 :key "t")
+	  (:name "No Tomados"
+		 :query "Owner = 'Nobody' AND (  Status = 'new' OR Status = 'open' ) AND Queue != 'abuse' AND Queue != 'staff_imfia' AND Queue != 'staff_iimpi' AND Queue != 'soporte_telefonia' AND Queue != 'soporte_fhce' AND Queue != 'staff_imerl'")))  
+       :bind
+       (("C-c r" . rt-dashboard)))
+   #+end_src
+
 ** Eshell
 
    #+begin_src emacs-lisp
